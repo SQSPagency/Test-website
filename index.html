@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SQSP Agency | Expert Squarespace Design & Marketing</title>
+  <title>Squarespace Web Design & Marketing | SQSP Agency</title>
+  <meta name="description" content="Squarespace web design, redesign and marketing for coaches, consultants, therapists and service businesses that need clearer websites and better enquiries.">
+  <link rel="canonical" href="https://sqsp-test-website.netlify.app/">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -61,17 +63,326 @@
       transform: translateX(3px);
       background: #000000;
     }
+    .fillout-fullscreen-root { position: fixed; inset: 0; z-index: 10000; background: #0f172a; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 420ms ease, visibility 0s linear 420ms; }
+    .fillout-fullscreen-root.is-open { opacity: 1; visibility: visible; pointer-events: auto; transition-delay: 0s; }
+    .fillout-fullscreen-panel { position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; transform: translateY(10px) scale(0.992); transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1); }
+    .fillout-fullscreen-root.is-open .fillout-fullscreen-panel { transform: translateY(0) scale(1); }
+    .fillout-close { position: fixed; top: 18px; right: 18px; z-index: 10001; width: 44px; height: 44px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.18); color: #fff; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.28); transition: transform 220ms ease, background 220ms ease, border-color 220ms ease; }
+    .fillout-close:hover { transform: scale(1.04); background: #111c33; border-color: rgba(255, 255, 255, 0.32); }
+    body.form-open { overflow: hidden; }
+    .visuals-intro {
+      background: radial-gradient(circle at 50% 0%, rgba(15, 23, 42, 0.08), transparent 34%), #ffffff;
+    }
+    .brand-pill-button {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      border-radius: 999px;
+      padding: 0 28px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: transform 260ms ease, box-shadow 260ms ease, background 260ms ease, border-color 260ms ease;
+    }
+    .brand-pill-button-primary {
+      background: #0f172a;
+      color: #ffffff;
+      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.18);
+    }
+    .brand-pill-button-primary:hover {
+      transform: translateY(-2px);
+      background: #111c33;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.24);
+    }
+    .brand-pill-button-secondary {
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      background: #ffffff;
+      color: #0f172a;
+    }
+    .brand-pill-button-secondary:hover {
+      transform: translateY(-2px);
+      border-color: rgba(15, 23, 42, 0.22);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+    }
+    .estimate-inline-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-color: rgba(255, 255, 255, 0.32);
+      transition: text-decoration-color 220ms ease, opacity 220ms ease;
+    }
+    .estimate-inline-link:hover {
+      text-decoration-color: currentColor;
+    }
+    .faq-item {
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
+      overflow: hidden;
+      transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+    }
+    .faq-item:hover {
+      transform: translateY(-1px);
+      border-color: rgba(15, 23, 42, 0.14);
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+    }
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 24px 28px;
+      text-align: left;
+      color: #0f172a;
+    }
+    .faq-icon {
+      flex: 0 0 auto;
+      transition: transform 220ms ease;
+    }
+    .faq-item.is-open .faq-icon {
+      transform: rotate(180deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 280ms ease;
+    }
+    .faq-answer-inner {
+      padding: 0 28px 24px;
+      color: #475569;
+      line-height: 1.75;
+    }
+    #sqsp-video-scroll-01.sqsp-video-scroll-gallery {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      overflow: hidden;
+      padding: clamp(28px, 5vw, 60px) 0;
+      background: #ffffff;
+    }
+    #sqsp-video-scroll-01 .sqsp-video-scroll-row {
+      display: flex;
+      width: max-content;
+    }
+    #sqsp-video-scroll-01 .sqsp-video-scroll-row + .sqsp-video-scroll-row {
+      margin-top: clamp(14px, 2vw, 22px);
+    }
+    #sqsp-video-scroll-01 .sqsp-video-scroll-row-one {
+      margin-left: -80px;
+    }
+    #sqsp-video-scroll-01 .sqsp-video-scroll-row-two {
+      margin-left: -220px;
+    }
+    #sqsp-video-scroll-01 .sqsp-video-scroll-track {
+      display: flex;
+      gap: clamp(14px, 2vw, 22px);
+      width: max-content;
+      animation: sqspVideoScrollLeft 42s linear infinite;
+      animation-play-state: paused;
+      will-change: transform;
+    }
+    #sqsp-video-scroll-01 .sqsp-video-scroll-track-reverse {
+      animation-direction: reverse;
+      animation-duration: 48s;
+      animation-play-state: paused;
+    }
+    #sqsp-video-scroll-01 .sqsp-video-scroll-row:hover .sqsp-video-scroll-track {
+      animation-play-state: running;
+    }
+    #sqsp-video-scroll-01 .sqsp-video-scroll-card {
+      flex: 0 0 clamp(220px, 24vw, 340px);
+      width: clamp(220px, 24vw, 340px);
+      height: clamp(290px, 31vw, 430px);
+      border-radius: clamp(22px, 2vw, 34px);
+      overflow: hidden;
+      background: #f3f4f6;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+    #sqsp-video-scroll-01 .sqsp-video-scroll-card video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .hero-stagger {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: heroFadeUp 780ms ease forwards;
+    }
+    .hero-stagger:nth-child(2) { animation-delay: 120ms; }
+    .hero-stagger:nth-child(3) { animation-delay: 240ms; }
+    .image-reveal {
+      opacity: 0;
+      transform: scale(1.025);
+      transition: opacity 900ms ease, transform 900ms ease;
+    }
+    .image-reveal.is-visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+    @keyframes heroFadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes sqspVideoScrollLeft {
+      from {
+        transform: translate3d(0, 0, 0);
+      }
+      to {
+        transform: translate3d(calc(-50% - 11px), 0, 0);
+      }
+    }
+    @media (max-width: 767px) {
+      #sqsp-video-scroll-01.sqsp-video-scroll-gallery {
+        padding: 28px 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      #sqsp-video-scroll-01 .sqsp-video-scroll-card {
+        flex-basis: 176px;
+        width: 176px;
+        height: 226px;
+        border-radius: 22px;
+      }
+      #sqsp-video-scroll-01 .sqsp-video-scroll-row-one {
+        margin-left: -90px;
+      }
+      #sqsp-video-scroll-01 .sqsp-video-scroll-row-two {
+        margin-left: -210px;
+      }
+      #sqsp-video-scroll-01 .sqsp-video-scroll-track {
+        gap: 14px;
+        animation-duration: 34s;
+        animation-play-state: paused;
+      }
+      #sqsp-video-scroll-01 .sqsp-video-scroll-track-reverse {
+        animation-duration: 40s;
+        animation-play-state: paused;
+      }
+    }
+    @media (min-width: 1200px) {
+      #sqsp-video-scroll-01 .sqsp-video-scroll-card {
+        flex-basis: 320px;
+        width: 320px;
+        height: 410px;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal,
+      .hero-stagger,
+      .image-reveal,
+      #sqsp-video-scroll-01 .sqsp-video-scroll-track {
+        animation: none;
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      #sqsp-video-scroll-01.sqsp-video-scroll-gallery {
+        overflow-x: auto;
+      }
+    }
+  
+    body { opacity: 0; transition: opacity 360ms ease; }
+    body.page-ready { opacity: 1; }
+    body.page-leaving { opacity: 0; }
+    .site-nav {
+      position: fixed;
+      transform: translateZ(0);
+    }
+    .site-nav-shell {
+      background: rgba(15, 23, 42, 0.46);
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.16);
+    }
+    .mobile-menu {
+      display: block;
+      opacity: 0;
+      transform: translateY(-10px) scale(0.985);
+      pointer-events: none;
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+    .mobile-menu.is-open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    .mobile-menu.hidden { display: block; }
+    .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      background: rgba(255, 255, 255, 0.92);
+      opacity: 0;
+      transition: opacity 300ms ease;
+    }
+    body.page-leaving .page-transition-overlay { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      body,
+      .mobile-menu,
+      .page-transition-overlay {
+        transition: none;
+      }
+    }
+    @media (min-width: 1024px) {
+      .mobile-menu {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body class="antialiased bg-white text-slate-900">
-  <nav class="absolute top-0 w-full z-50 p-6 flex justify-between items-center text-white/90">
-    <div class="flex items-center gap-2">
+  <div class="page-transition-overlay" aria-hidden="true"></div>
+  <nav class="site-nav top-0 left-0 right-0 z-50 p-4 md:p-6">
+    <div class="site-nav-shell mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/15 bg-black/10 px-4 py-3 text-white/90 backdrop-blur-md md:px-5">
+    <a href="index.html" class="flex items-center gap-2">
       <div class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
         <i data-lucide="layers" class="w-5 h-5 text-white stroke-[1.5]"></i>
       </div>
       <span class="text-sm font-medium tracking-tight">SQSP Agency</span>
+    </a>
+    <div class="hidden lg:flex items-center gap-6 text-xs font-medium">
+      <a href="squarespace-web-design.html" class="hover:text-white transition-colors">Web Design</a>
+      <a href="website-redesign.html" class="hover:text-white transition-colors">Redesign</a>
+      <a href="digital-marketing.html" class="hover:text-white transition-colors">Marketing</a>
+      <a href="https://sqsp-estimate-quiz.netlify.app" class="hover:text-white transition-colors">Estimate</a>
+      <a href="#contact" class="hover:text-white transition-colors">Contact</a>
     </div>
-    <a href="#contact" class="px-5 py-2 rounded-full bg-white text-slate-900 text-xs font-medium hover:bg-slate-100 transition-colors">Get Started</a>
+    <div class="flex items-center gap-3">
+      <a href="https://form.fillout.com/t/bLBrXspQatus" class="js-fillout-trigger hidden sm:inline-flex px-5 py-2 rounded-full bg-white text-slate-900 text-xs font-medium hover:bg-slate-100 transition-colors">Get Started</a>
+      <button type="button" class="menu-toggle lg:hidden w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center" aria-label="Open navigation menu" aria-expanded="false">
+        <i data-lucide="menu" class="menu-icon-open w-5 h-5 text-white stroke-[1.5]"></i>
+        <i data-lucide="x" class="menu-icon-close hidden w-5 h-5 text-white stroke-[1.5]"></i>
+      </button>
+    </div>
+    <div class="mobile-menu absolute top-[76px] left-4 right-4 rounded-2xl bg-white/95 text-slate-950 shadow-2xl backdrop-blur-md border border-white/40 p-4 lg:hidden">
+      <div class="grid gap-1 text-sm font-medium">
+        <a href="squarespace-web-design.html" class="px-4 py-3 rounded-xl hover:bg-slate-100">Web Design</a>
+        <a href="website-redesign.html" class="px-4 py-3 rounded-xl hover:bg-slate-100">Redesign</a>
+        <a href="digital-marketing.html" class="px-4 py-3 rounded-xl hover:bg-slate-100">Marketing</a>
+        <a href="https://sqsp-estimate-quiz.netlify.app" class="px-4 py-3 rounded-xl hover:bg-slate-100">Instant Estimate</a>
+        <a href="#contact" class="px-4 py-3 rounded-xl hover:bg-slate-100">Contact</a>
+        <a href="https://form.fillout.com/t/bLBrXspQatus" class="js-fillout-trigger mt-2 px-4 py-3 rounded-xl bg-slate-950 text-white text-center">Get Started</a>
+      </div>
+    </div>
+    </div>
   </nav>
 
   <header class="relative w-full h-screen min-h-[700px] flex items-center justify-center text-center px-4 overflow-hidden">
@@ -82,20 +393,25 @@
       <div class="hero-overlay absolute inset-0"></div>
     </div>
     <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center mt-10">
-      <h1 class="text-4xl md:text-6xl lg:text-7xl font-medium text-white tracking-tight leading-[1.1] mb-6">
+      <h1 class="hero-stagger text-4xl md:text-6xl lg:text-7xl font-medium text-white tracking-tight leading-[1.1] mb-6">
         Squarespace Web Design <br class="hidden md:block"> & Marketing, Hassle-Free
       </h1>
-      <p class="text-base md:text-lg text-white/90 max-w-2xl font-light leading-relaxed mb-8">
+      <p class="hero-stagger text-base md:text-lg text-white/90 max-w-2xl font-light leading-relaxed mb-8">
         From design to marketing, we handle it all-so you don't have to. Passionate, affordable, and results-driven, we're your long-term Squarespace partner. Build, scale, thrive.
       </p>
-      <button class="hero-cta px-6 py-2.5 text-slate-950 rounded-full font-semibold text-sm transition-all duration-300">
-        <span>Start Your Project</span>
-        <span class="hero-cta-icon" aria-hidden="true"><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
-      </button>
+      <div class="hero-stagger flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <button type="button" class="js-fillout-trigger hero-cta px-6 py-2.5 text-slate-950 rounded-full font-semibold text-sm transition-all duration-300">
+          <span>Start Your Project</span>
+          <span class="hero-cta-icon" aria-hidden="true"><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+        </button>
+        <a href="https://sqsp-estimate-quiz.netlify.app" class="px-6 py-2.5 rounded-full border border-white/30 bg-white/10 text-white text-sm font-semibold backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-slate-950">
+          Get Instant Estimate
+        </a>
+      </div>
     </div>
   </header>
 
-  <section class="bg-[#1a1a1a] text-white py-16 md:py-20 px-6">
+  <section class="reveal bg-[#0f172a] text-white py-16 md:py-20 px-6">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       <div class="flex flex-wrap gap-8 md:gap-16">
         <div><div class="text-3xl md:text-4xl font-normal tracking-tight">2025</div><div class="text-xs text-white/60 mt-1 uppercase tracking-wider">Circle Gold Partner</div></div>
@@ -104,12 +420,65 @@
       </div>
       <div class="md:pl-10 md:border-l border-white/10">
         <p class="text-sm md:text-base text-white/80 leading-relaxed font-light">Results-driven digital marketing services specializing in PPC ads, SEO, social media, and email marketing. We are certified professionals dedicated to growing your business fast.</p>
-        <a href="#" class="inline-block mt-4 text-sm text-white underline underline-offset-4 decoration-white/30 hover:decoration-white">View Certifications</a>
+        <div class="mt-4 flex flex-col gap-3 text-sm text-white sm:flex-row sm:items-center">
+          <a href="https://sqsp-estimate-quiz.netlify.app" class="estimate-inline-link">Estimate your project <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i></a>
+          <a href="https://form.fillout.com/t/bLBrXspQatus" class="js-fillout-trigger estimate-inline-link text-white/80">View Certifications</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="py-24 px-6 bg-white">
+  <section class="reveal visuals-intro px-6 py-20 md:py-28 text-center">
+    <div class="mx-auto max-w-5xl">
+      <span class="mb-4 block text-xs font-medium uppercase tracking-[0.28em] text-slate-500">Website Visual Direction</span>
+      <h2 class="mx-auto max-w-4xl text-4xl font-medium leading-[1.05] tracking-tight text-slate-950 md:text-6xl">
+        Squarespace websites that make your brand feel instantly clear.
+      </h2>
+      <p class="mx-auto mt-7 max-w-2xl text-base font-light leading-relaxed text-slate-600 md:text-lg">
+        From homepage storytelling to service visuals, we shape every section so visitors understand what you do, trust your expertise, and know exactly what to do next.
+      </p>
+      <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a href="https://sqsp-estimate-quiz.netlify.app" class="brand-pill-button brand-pill-button-primary">
+          <span>Get Website Estimate</span>
+          <i data-lucide="arrow-right" class="h-4 w-4"></i>
+        </a>
+        <a href="#sqsp-video-scroll-01" class="brand-pill-button brand-pill-button-secondary">See Website Examples</a>
+      </div>
+      <p class="mt-8 text-[11px] font-medium uppercase tracking-[0.28em] text-slate-400">
+        Custom design - clear messaging - conversion focused
+      </p>
+    </div>
+  </section>
+
+  <section id="sqsp-video-scroll-01" class="reveal sqsp-video-scroll-gallery" aria-label="Squarespace website video showcase">
+    <div class="sqsp-video-scroll-row sqsp-video-scroll-row-one">
+      <div class="sqsp-video-scroll-track">
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_144509_89e2d612-8af2-45c3-90f4-4831bc60715d.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_101827_abebfeec-f243-466b-b494-7f6814c0fbbf.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_115139_0fc6bd3d-3631-4d26-ab9b-28293887dcc9.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_144509_89e2d612-8af2-45c3-90f4-4831bc60715d.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_101827_abebfeec-f243-466b-b494-7f6814c0fbbf.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_115139_0fc6bd3d-3631-4d26-ab9b-28293887dcc9.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
+      </div>
+    </div>
+
+    <div class="sqsp-video-scroll-row sqsp-video-scroll-row-two">
+      <div class="sqsp-video-scroll-track sqsp-video-scroll-track-reverse">
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260428_193507_4286c423-2fd9-4efd-92bd-91a939453fc1.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_101827_abebfeec-f243-466b-b494-7f6814c0fbbf.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_144509_89e2d612-8af2-45c3-90f4-4831bc60715d.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260428_193507_4286c423-2fd9-4efd-92bd-91a939453fc1.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_101827_abebfeec-f243-466b-b494-7f6814c0fbbf.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_144509_89e2d612-8af2-45c3-90f4-4831bc60715d.mp4" type="video/mp4"></video></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal py-24 px-6 bg-white">
     <div class="max-w-7xl mx-auto">
       <div class="mb-16">
         <span class="text-xs font-medium uppercase tracking-widest text-slate-500 mb-2 block">Our Expertise</span>
@@ -117,29 +486,29 @@
         <p class="text-lg text-slate-600 font-light max-w-2xl">Tell us which service you need help with. Whether you need a custom design, a high-converting template, or a marketing strategy.</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-        <div class="group"><div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-6"><i data-lucide="monitor" class="w-5 h-5 text-slate-900 stroke-[1.5]"></i></div><h3 class="text-xl font-medium tracking-tight mb-3">Custom Squarespace Design</h3><p class="text-sm text-slate-600 leading-relaxed mb-4">Get a bespoke, high-converting Squarespace site tailored to your brand. Sleek, fast, and optimized for leads & engagement.</p><a href="#" class="text-sm font-medium underline underline-offset-4 decoration-slate-300 hover:decoration-slate-900 transition-all">Learn More</a></div>
-        <div class="group"><div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-6"><i data-lucide="refresh-cw" class="w-5 h-5 text-slate-900 stroke-[1.5]"></i></div><h3 class="text-xl font-medium tracking-tight mb-3">Redesign Squarespace Website</h3><p class="text-sm text-slate-600 leading-relaxed mb-4">Transform your website's overall look and feel with our professional redesign services, tailored to enhance your online presence.</p><a href="#" class="text-sm font-medium underline underline-offset-4 decoration-slate-300 hover:decoration-slate-900 transition-all">Learn More</a></div>
-        <div class="group"><div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-6"><i data-lucide="layout-template" class="w-5 h-5 text-slate-900 stroke-[1.5]"></i></div><h3 class="text-xl font-medium tracking-tight mb-3">Squarespace Website Templates</h3><p class="text-sm text-slate-600 leading-relaxed mb-4">Launch faster with ready-made, customizable Squarespace templates designed for service-based businesses.</p><a href="#" class="text-sm font-medium underline underline-offset-4 decoration-slate-300 hover:decoration-slate-900 transition-all">Explore Templates</a></div>
-        <div class="group"><div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-6"><i data-lucide="bar-chart-3" class="w-5 h-5 text-slate-900 stroke-[1.5]"></i></div><h3 class="text-xl font-medium tracking-tight mb-3">Digital Marketing for Squarespace</h3><p class="text-sm text-slate-600 leading-relaxed mb-4">Results-driven digital marketing services specializing in PPC ads, SEO, social media, and email marketing designed to grow your business.</p><a href="#" class="text-sm font-medium underline underline-offset-4 decoration-slate-300 hover:decoration-slate-900 transition-all">Learn More</a></div>
+        <div class="group"><div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-6"><i data-lucide="monitor" class="w-5 h-5 text-slate-900 stroke-[1.5]"></i></div><h3 class="text-xl font-medium tracking-tight mb-3">Custom Squarespace Design</h3><p class="text-sm text-slate-600 leading-relaxed mb-4">Get a bespoke, high-converting Squarespace site tailored to your brand. Sleek, fast, and optimized for leads & engagement.</p><a href="squarespace-web-design.html" class="text-sm font-medium underline underline-offset-4 decoration-slate-300 hover:decoration-slate-900 transition-all">Learn More</a></div>
+        <div class="group"><div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-6"><i data-lucide="refresh-cw" class="w-5 h-5 text-slate-900 stroke-[1.5]"></i></div><h3 class="text-xl font-medium tracking-tight mb-3">Redesign Squarespace Website</h3><p class="text-sm text-slate-600 leading-relaxed mb-4">Transform your website's overall look and feel with our professional redesign services, tailored to enhance your online presence.</p><a href="website-redesign.html" class="text-sm font-medium underline underline-offset-4 decoration-slate-300 hover:decoration-slate-900 transition-all">Learn More</a></div>
+        <div class="group"><div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-6"><i data-lucide="layout-template" class="w-5 h-5 text-slate-900 stroke-[1.5]"></i></div><h3 class="text-xl font-medium tracking-tight mb-3">Squarespace Website Templates</h3><p class="text-sm text-slate-600 leading-relaxed mb-4">Launch faster with ready-made, customizable Squarespace templates designed for service-based businesses.</p><a href="https://form.fillout.com/t/bLBrXspQatus" class="js-fillout-trigger text-sm font-medium underline underline-offset-4 decoration-slate-300 hover:decoration-slate-900 transition-all">Explore Templates</a></div>
+        <div class="group"><div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-6"><i data-lucide="bar-chart-3" class="w-5 h-5 text-slate-900 stroke-[1.5]"></i></div><h3 class="text-xl font-medium tracking-tight mb-3">Digital Marketing for Squarespace</h3><p class="text-sm text-slate-600 leading-relaxed mb-4">Results-driven digital marketing services specializing in PPC ads, SEO, social media, and email marketing designed to grow your business.</p><a href="digital-marketing.html" class="text-sm font-medium underline underline-offset-4 decoration-slate-300 hover:decoration-slate-900 transition-all">Learn More</a></div>
       </div>
     </div>
   </section>
 
-  <section class="py-24 px-6 bg-slate-50">
+  <section class="reveal py-24 px-6 bg-slate-50">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
       <div>
         <span class="text-xs font-medium uppercase tracking-widest text-slate-500 mb-2 block">About SQSP Agency</span>
         <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-slate-900 mb-6">Designed for Growth, Optimized for Impact</h2>
         <p class="text-lg text-slate-600 font-light mb-6 leading-relaxed">We specialize in Squarespace design & marketing for coaches, consultants, and service-based businesses. Our goal? To turn your website into a sales machine with stunning designs, strategic marketing, and AI automation.</p>
-        <a href="#" class="inline-flex items-center px-6 py-3 rounded-full bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-colors">Meet the Team</a>
+        <a href="https://form.fillout.com/t/bLBrXspQatus" class="js-fillout-trigger inline-flex items-center px-6 py-3 rounded-full bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-colors">Meet the Team</a>
       </div>
       <div class="relative rounded-2xl overflow-hidden aspect-[4/3]">
-        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2664&auto=format&fit=crop" alt="Three people engaged in a discussion around a laptop" class="absolute inset-0 w-full h-full object-cover">
+        <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2F95393718-037d-46d3-b91a-f1b7b1822707.png&w=1920&q=85" alt="Squarespace website design preview" class="image-reveal absolute inset-0 w-full h-full object-cover">
       </div>
     </div>
   </section>
 
-  <section class="py-24 px-6 bg-white border-t border-slate-100">
+  <section class="reveal py-24 px-6 bg-white border-t border-slate-100">
     <div class="max-w-7xl mx-auto">
       <h2 class="text-2xl font-medium tracking-tight mb-12">Industries We Serve</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -153,7 +522,7 @@
     </div>
   </section>
 
-  <section class="py-24 px-6 bg-slate-900 text-white">
+  <section class="reveal py-24 px-6 bg-slate-900 text-white">
     <div class="max-w-7xl mx-auto">
       <h2 class="text-2xl font-normal tracking-tight mb-16 opacity-80">What our clients say</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -164,12 +533,12 @@
     </div>
   </section>
 
-  <section class="py-24 px-6 bg-white">
+  <section class="reveal py-24 px-6 bg-white">
     <div class="max-w-7xl mx-auto">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div class="lg:col-span-5 order-2 lg:order-1">
           <div class="relative rounded-2xl overflow-hidden aspect-[3/4] shadow-xl">
-            <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/1e8801da-5a4a-475b-961d-0dbc4903d632_3840w.jpg" alt="Rahim Huda working on laptop" class="w-full h-full object-cover bg-center absolute inset-0">
+            <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/1e8801da-5a4a-475b-961d-0dbc4903d632_3840w.jpg" alt="Rahim Huda working on laptop" class="image-reveal w-full h-full object-cover bg-center absolute inset-0">
             <div class="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md p-4 rounded-xl">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center"><i data-lucide="play" class="w-4 h-4 text-white fill-current ml-1"></i></div>
@@ -192,14 +561,86 @@
     </div>
   </section>
 
-  <section id="contact" class="py-24 px-6 bg-slate-50 border-t border-slate-100 text-center">
+  <section class="reveal py-24 px-6 bg-white border-t border-slate-100">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-14">
+        <span class="text-xs font-medium uppercase tracking-[0.28em] text-slate-500 mb-4 block">FAQ</span>
+        <h2 class="text-4xl md:text-6xl font-medium tracking-tight text-slate-950 mb-5">Common questions</h2>
+        <p class="text-lg text-slate-600 font-light">Quick answers before you start your Squarespace project.</p>
+      </div>
+
+      <div class="space-y-4">
+        <div class="faq-item">
+          <button type="button" class="faq-question" aria-expanded="false">
+            <span class="text-lg md:text-xl font-semibold">What does SQSP Agency help with?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 stroke-[2]"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">We help service-based businesses design, redesign, and market Squarespace websites. That can include page strategy, visual design, copy direction, SEO foundations, Google Ads, and conversion-focused enquiry flows.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" aria-expanded="false">
+            <span class="text-lg md:text-xl font-semibold">Can you improve my existing Squarespace website?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 stroke-[2]"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes. If your current site feels dated, unclear, slow, or is not generating enough enquiries, we can restructure the pages, sharpen the messaging, improve the design, and make the next step easier for visitors.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" aria-expanded="false">
+            <span class="text-lg md:text-xl font-semibold">Do you only work with Squarespace?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 stroke-[2]"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Squarespace is the main focus because it is clean, flexible, and easy for business owners to manage after launch. The marketing strategy around the site can also include Google Ads, SEO, email, and social content.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" aria-expanded="false">
+            <span class="text-lg md:text-xl font-semibold">How long does a website project take?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 stroke-[2]"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Timelines depend on the number of pages, content readiness, and whether you need design only or marketing support as well. After you send an enquiry, we can recommend a realistic timeline based on your goals.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" aria-expanded="false">
+            <span class="text-lg md:text-xl font-semibold">Can you help with Google Ads and SEO after launch?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 stroke-[2]"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes. The site can be built with SEO basics in place, and we can also support Google Ads campaigns, conversion tracking, landing page improvements, and ongoing marketing so your website has a clearer path to leads.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" aria-expanded="false">
+            <span class="text-lg md:text-xl font-semibold">What happens after I submit the form?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 stroke-[2]"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Your enquiry is reviewed and we look at what you need: a new site, a redesign, templates, or marketing support. Then we come back with the best next step rather than forcing you into a one-size-fits-all package.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="reveal py-24 px-6 bg-slate-50 border-t border-slate-100 text-center">
     <div class="max-w-3xl mx-auto">
       <span class="text-sm font-semibold tracking-tight text-slate-900 mb-4 block">Launch. Grow. Scale.</span>
       <h2 class="text-4xl md:text-6xl font-medium tracking-tight text-slate-900 mb-6">Ready to Get Started?</h2>
       <p class="text-lg text-slate-600 font-light mb-10">Your Squarespace website should work as hard as you do. Whether you need a custom design, a high-converting template, or a marketing strategy that drives results, we're here to help. Let's build something powerful together.</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <button class="px-8 py-4 bg-slate-900 text-white rounded-full font-medium text-base hover:bg-slate-800 transition-colors shadow-lg">Get All-in-One Solutions</button>
-        <button class="px-8 py-4 bg-white text-slate-900 border border-slate-200 rounded-full font-medium text-base hover:bg-slate-50 transition-colors">View Templates</button>
+        <a href="https://sqsp-estimate-quiz.netlify.app" class="px-8 py-4 bg-slate-900 text-white rounded-full font-medium text-base hover:bg-slate-800 transition-colors shadow-lg">Get Instant Estimate</a>
+        <button type="button" class="js-fillout-trigger px-8 py-4 bg-white text-slate-900 border border-slate-200 rounded-full font-medium text-base hover:bg-slate-50 transition-colors">Book a Project Call</button>
       </div>
     </div>
   </section>
@@ -207,10 +648,115 @@
   <footer class="py-12 px-6 border-t border-slate-200 bg-white">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
       <div class="mb-4 md:mb-0">© 2025 SQSP Agency. All rights reserved.</div>
-      <div class="flex gap-6"><a href="#" class="hover:text-slate-900">Privacy</a><a href="#" class="hover:text-slate-900">Terms</a><a href="#" class="hover:text-slate-900">Contact</a></div>
+      <div class="flex gap-6"><a href="privacy.html" class="hover:text-slate-900">Privacy</a><a href="terms.html" class="hover:text-slate-900">Terms</a><a href="https://form.fillout.com/t/bLBrXspQatus" class="js-fillout-trigger hover:text-slate-900">Contact</a></div>
     </div>
   </footer>
 
-  <script>lucide.createIcons();</script>
+  <div class="fillout-fullscreen-root" id="fillout-fullscreen" aria-hidden="true">
+    <div class="fillout-fullscreen-panel">
+      <button type="button" class="fillout-close" aria-label="Close form"><i data-lucide="x" class="w-5 h-5"></i></button>
+      <div data-fillout-id="bLBrXspQatus" data-fillout-embed-type="fullscreen" style="width:100%;height:100%;" data-fillout-inherit-parameters></div>
+    </div>
+  </div>
+  <script src="https://server.fillout.com/embed/v1/"></script>
+  <script>
+    lucide.createIcons();
+
+    const filloutFormUrl = "https://form.fillout.com/t/bLBrXspQatus";
+    const filloutRoot = document.querySelector(".fillout-fullscreen-root");
+    const filloutClose = document.querySelector(".fillout-close");
+
+    function openFilloutForm(event) {
+      event.preventDefault();
+
+      if (filloutRoot) {
+        filloutRoot.classList.add("is-open");
+        filloutRoot.setAttribute("aria-hidden", "false");
+        document.body.classList.add("form-open");
+        return;
+      }
+
+      window.open(filloutFormUrl, "_blank", "noopener,noreferrer");
+    }
+
+    function closeFilloutForm() {
+      if (!filloutRoot) return;
+      filloutRoot.classList.remove("is-open");
+      filloutRoot.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("form-open");
+    }
+
+    filloutClose?.addEventListener("click", closeFilloutForm);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeFilloutForm();
+    });
+
+    document.querySelectorAll(".js-fillout-trigger").forEach((trigger) => {
+      trigger.addEventListener("click", openFilloutForm);
+    });
+
+    document.querySelectorAll(".faq-item").forEach((item) => {
+      const question = item.querySelector(".faq-question");
+      const answer = item.querySelector(".faq-answer");
+
+      question?.addEventListener("click", () => {
+        const isOpen = item.classList.contains("is-open");
+
+        item.classList.toggle("is-open", !isOpen);
+        question.setAttribute("aria-expanded", String(!isOpen));
+
+        if (!answer) return;
+        answer.style.maxHeight = isOpen ? "0px" : `${answer.scrollHeight}px`;
+      });
+    });
+
+    const menuToggle = document.querySelector(".menu-toggle");
+    const mobileMenu = document.querySelector(".mobile-menu");
+
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener("click", () => {
+        const isOpen = mobileMenu.classList.contains("is-open");
+        mobileMenu.classList.toggle("is-open", !isOpen);
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+        document.querySelector(".menu-icon-open")?.classList.toggle("hidden", !isOpen);
+        document.querySelector(".menu-icon-close")?.classList.toggle("hidden", isOpen);
+      });
+    }
+
+    document.body.classList.add("page-ready");
+
+    document.querySelectorAll('a[href^="/"], a[href^="./"], a[href^="../"], a[href$=".html"]').forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const href = link.getAttribute("href");
+        if (!href || link.target || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        if (mobileMenu) {
+          mobileMenu.classList.remove("is-open");
+          menuToggle?.setAttribute("aria-expanded", "false");
+          document.querySelector(".menu-icon-open")?.classList.remove("hidden");
+          document.querySelector(".menu-icon-close")?.classList.add("hidden");
+        }
+        document.body.classList.add("page-leaving");
+        window.setTimeout(() => { window.location.href = href; }, 260);
+      });
+    });
+
+    const revealItems = document.querySelectorAll(".reveal, .image-reveal");
+
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.14, rootMargin: "0px 0px -48px 0px" });
+
+      revealItems.forEach((item) => revealObserver.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+    }
+  </script>
 </body>
 </html>
