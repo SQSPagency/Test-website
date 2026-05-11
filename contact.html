@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact SQSP Agency | Squarespace Website Help</title>
+  <meta name="description" content="Contact SQSP Agency for friendly Squarespace website help, redesign questions, SEO support, or a quick website review.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; opacity: 0; transition: opacity 360ms ease; }
+    body.page-ready { opacity: 1; }
+    body.page-leaving { opacity: 0; }
+    .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      background: rgba(255, 255, 255, 0.92);
+      opacity: 0;
+      transition: opacity 300ms ease;
+    }
+    body.page-leaving .page-transition-overlay { opacity: 1; }
+    .site-nav {
+      position: fixed;
+      transform: translateZ(0);
+    }
+    .site-nav-shell {
+      background: rgba(86, 78, 68, 0.52);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 18px 42px rgba(10, 16, 30, 0.18);
+    }
+    .mobile-menu {
+      display: block;
+      opacity: 0;
+      transform: translateY(-10px) scale(0.985);
+      pointer-events: none;
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+    .mobile-menu.is-open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    .hero-media {
+      filter: saturate(0.82) sepia(0.18) brightness(0.86) contrast(0.96);
+    }
+    .hero-overlay {
+      background:
+        linear-gradient(to bottom, rgba(35, 29, 24, 0.12), rgba(18, 15, 13, 0.62)),
+        linear-gradient(90deg, rgba(92, 75, 58, 0.2), rgba(10, 16, 30, 0.1));
+    }
+    .brand-pill-button {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 999px;
+      padding: 0 28px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease, border-color 220ms ease;
+    }
+    .brand-pill-button-primary {
+      background: #0b1220;
+      color: #fff;
+      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.18);
+    }
+    .brand-pill-button-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.24);
+    }
+    .contact-card {
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 24px 70px rgba(10, 18, 32, 0.08);
+    }
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      max-width: 100%;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      border-radius: 16px;
+      background: #fff;
+      padding: 15px 16px;
+      color: #0b1220;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+      box-sizing: border-box;
+    }
+    .form-input,
+    .form-select { min-height: 52px; }
+    .form-textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: #0b1220;
+      box-shadow: 0 0 0 4px rgba(11, 18, 32, 0.08);
+    }
+    .contact-status {
+      min-height: 24px;
+      color: #647084;
+      font-size: 14px;
+    }
+    .contact-success {
+      display: none;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 24px;
+      background: #fff;
+      padding: clamp(28px, 5vw, 48px);
+      box-shadow: 0 24px 70px rgba(10, 18, 32, 0.08);
+    }
+    .contact-success.is-visible { display: block; }
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (min-width: 1024px) {
+      .mobile-menu { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      body,
+      .mobile-menu,
+      .page-transition-overlay,
+      .reveal {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased bg-white text-[#0b1220]">
+  <div class="page-transition-overlay" aria-hidden="true"></div>
+
+  <nav class="site-nav left-0 right-0 top-0 z-50 p-4 md:p-6">
+    <div class="site-nav-shell mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/15 px-4 py-3 text-white/90 backdrop-blur-md md:px-5">
+      <a href="index.html" class="flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
+          <i data-lucide="layers" class="h-5 w-5 stroke-[1.5] text-white"></i>
+        </div>
+        <span class="text-sm font-medium tracking-tight">SQSP Agency</span>
+      </a>
+      <div class="hidden items-center gap-6 text-xs font-medium lg:flex">
+        <a href="index.html#services" class="transition-colors hover:text-white">Services</a>
+        <a href="index.html#pricing" class="transition-colors hover:text-white">Pricing</a>
+        <a href="index.html#process" class="transition-colors hover:text-white">How It Works</a>
+        <a href="contact.html" class="text-white">Contact</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="#contact-form" class="hidden rounded-full bg-white px-5 py-2 text-xs font-medium text-[#0b1220] transition-colors hover:bg-slate-100 sm:inline-flex">Ask a Question</a>
+        <button type="button" class="menu-toggle flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm lg:hidden" aria-label="Open navigation menu" aria-expanded="false">
+          <i data-lucide="menu" class="menu-icon-open h-5 w-5 stroke-[1.5] text-white"></i>
+          <i data-lucide="x" class="menu-icon-close hidden h-5 w-5 stroke-[1.5] text-white"></i>
+        </button>
+      </div>
+      <div class="mobile-menu absolute left-4 right-4 top-[76px] rounded-2xl border border-white/40 bg-white/95 p-4 text-[#0b1220] shadow-2xl backdrop-blur-md lg:hidden">
+        <div class="grid gap-1 text-sm font-medium">
+          <a href="index.html#services" class="rounded-xl px-4 py-3 hover:bg-slate-100">Services</a>
+          <a href="index.html#pricing" class="rounded-xl px-4 py-3 hover:bg-slate-100">Pricing</a>
+          <a href="index.html#process" class="rounded-xl px-4 py-3 hover:bg-slate-100">How It Works</a>
+          <a href="#contact-form" class="mt-2 rounded-xl bg-[#0b1220] px-4 py-3 text-center text-white">Ask a Question</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="relative flex min-h-[620px] items-center overflow-hidden px-6 pt-28">
+    <div class="absolute inset-0 z-0">
+      <video class="hero-media h-full w-full object-cover" autoplay muted loop playsinline preload="metadata" aria-label="Warm SQSP Agency contact background">
+        <source src="assets/contact-hero.mp4?v=2" type="video/mp4">
+      </video>
+      <div class="hero-overlay absolute inset-0"></div>
+    </div>
+    <div class="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-end gap-10 pb-16 pt-24 text-white lg:grid-cols-12">
+      <div class="lg:col-span-8">
+        <span class="mb-5 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.24em] text-white/85 backdrop-blur-md">Friendly Squarespace help</span>
+        <h1 class="max-w-4xl text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">Have a question about your website?</h1>
+      </div>
+      <div class="lg:col-span-4">
+        <p class="text-lg font-light leading-relaxed text-white/88">Send a quick message and we’ll help you understand the best next step. No pressure, no long brief, just a calm reply.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="contact-form" class="bg-[#f7f8fa] px-6 py-20 md:py-24">
+      <div class="mx-auto grid max-w-7xl grid-cols-1 gap-10 lg:grid-cols-12">
+        <div class="reveal lg:col-span-5">
+          <span class="mb-3 block text-xs font-medium uppercase tracking-widest text-slate-500">Contact SQSP Agency</span>
+          <h2 class="mb-6 text-3xl font-medium tracking-tight md:text-5xl">Ask anything before you start.</h2>
+          <p class="mb-8 text-lg font-light leading-relaxed text-slate-600">Use this page for general questions, quick Squarespace advice, project fit, SEO support, redesign concerns, or anything you’re unsure about. It now goes into the same main enquiry form as project requests, so everything stays tidy.</p>
+          <div class="space-y-4">
+            <div class="flex gap-4">
+              <div class="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-white"><i data-lucide="message-circle" class="h-5 w-5"></i></div>
+              <div>
+                <h3 class="font-medium">Friendly first reply</h3>
+                <p class="text-sm leading-relaxed text-slate-500">We’ll keep it clear and practical, especially if you’re still figuring out what you need.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-white"><i data-lucide="shield-check" class="h-5 w-5"></i></div>
+              <div>
+                <h3 class="font-medium">No spam or pressure</h3>
+                <p class="text-sm leading-relaxed text-slate-500">Your message goes through Netlify Forms and is only used to reply to your enquiry.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal lg:col-span-7">
+          <form class="contact-card grid gap-5 p-6 md:p-8" name="sqsp-website-review" method="POST" action="/__forms.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+            <input type="hidden" name="form-name" value="sqsp-website-review">
+            <input type="hidden" name="enquiry_source" value="Contact page">
+            <input type="hidden" name="has_website" value="">
+            <input type="hidden" name="main_issue" value="">
+            <input type="hidden" name="timeline" value="">
+            <input type="hidden" name="budget" value="">
+            <p hidden>
+              <label>Don’t fill this out: <input name="bot-field"></label>
+            </p>
+            <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+              <label class="block">
+                <span class="mb-2 block text-sm font-medium">Name</span>
+                <input class="form-input" name="name" type="text" autocomplete="name" required>
+              </label>
+              <label class="block">
+                <span class="mb-2 block text-sm font-medium">Email</span>
+                <input class="form-input" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+              </label>
+            </div>
+            <label class="block">
+              <span class="mb-2 block text-sm font-medium">What can we help with?</span>
+              <select class="form-select" name="service_need" required>
+                <option value="">Choose one</option>
+                <option>New Squarespace website</option>
+                <option>Website redesign</option>
+                <option>SEO or Google Ads</option>
+                <option>Template or quick fix</option>
+                <option>General question</option>
+              </select>
+            </label>
+            <label class="block">
+              <span class="mb-2 block text-sm font-medium">Website link <span class="font-normal text-slate-400">(optional)</span></span>
+              <input class="form-input" name="website_url" type="text" placeholder="https://yourwebsite.com" inputmode="url" autocomplete="url">
+            </label>
+            <label class="block">
+              <span class="mb-2 block text-sm font-medium">Message</span>
+              <textarea class="form-textarea" name="message" placeholder="Tell us what you’re wondering about, or what feels unclear on your website." required></textarea>
+            </label>
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <button type="submit" class="brand-pill-button brand-pill-button-primary">Send Message <i data-lucide="arrow-right" class="h-4 w-4"></i></button>
+              <p class="contact-status" aria-live="polite"></p>
+            </div>
+          </form>
+
+          <div class="contact-success">
+            <span class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#0b1220] text-white"><i data-lucide="check" class="h-5 w-5"></i></span>
+            <h2 class="mb-4 text-3xl font-medium tracking-tight">Thanks — your message has been sent.</h2>
+            <p class="mb-8 text-lg font-light leading-relaxed text-slate-600">We’ll review your message and come back with the clearest next step.</p>
+            <a href="index.html" class="brand-pill-button brand-pill-button-primary">Back to SQSP Agency</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white px-6 py-20">
+      <div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-3">
+        <div class="border-l border-slate-200 pl-6">
+          <h3 class="mb-3 text-lg font-medium">Website questions</h3>
+          <p class="text-sm leading-relaxed text-slate-500">Ask whether your current Squarespace site needs a redesign, fixes, SEO work, or a cleaner structure.</p>
+        </div>
+        <div class="border-l border-slate-200 pl-6">
+          <h3 class="mb-3 text-lg font-medium">Project fit</h3>
+          <p class="text-sm leading-relaxed text-slate-500">Not sure which service is right? Send a short note and we’ll point you in the right direction.</p>
+        </div>
+        <div class="border-l border-slate-200 pl-6">
+          <h3 class="mb-3 text-lg font-medium">Support requests</h3>
+          <p class="text-sm leading-relaxed text-slate-500">Need help with a template, mobile layout, launch problem, SEO setting, or quick fix? Start here.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white px-6 py-12">
+    <div class="mx-auto flex max-w-7xl flex-col justify-between gap-4 text-sm text-slate-500 md:flex-row">
+      <p>© 2026 SQSP Agency. All rights reserved.</p>
+      <div class="flex gap-6">
+        <a href="index.html" class="hover:text-[#0b1220]">Home</a>
+        <a href="privacy.html" class="hover:text-[#0b1220]">Privacy</a>
+        <a href="terms.html" class="hover:text-[#0b1220]">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    const menuToggle = document.querySelector(".menu-toggle");
+    const mobileMenu = document.querySelector(".mobile-menu");
+
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener("click", () => {
+        const isOpen = mobileMenu.classList.contains("is-open");
+        mobileMenu.classList.toggle("is-open", !isOpen);
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+        document.querySelector(".menu-icon-open")?.classList.toggle("hidden", !isOpen);
+        document.querySelector(".menu-icon-close")?.classList.toggle("hidden", isOpen);
+      });
+    }
+
+    document.body.classList.add("page-ready");
+
+    document.querySelectorAll('a[href^="/"], a[href^="./"], a[href^="../"], a[href$=".html"]').forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const href = link.getAttribute("href");
+        if (!href || link.target || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || href.includes("#")) return;
+        event.preventDefault();
+        document.body.classList.add("page-leaving");
+        window.setTimeout(() => { window.location.href = href; }, 260);
+      });
+    });
+
+    const contactForm = document.querySelector('form[name="sqsp-website-review"]');
+    const contactStatus = document.querySelector(".contact-status");
+    const contactSuccess = document.querySelector(".contact-success");
+
+    contactForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const submitButton = contactForm.querySelector('button[type="submit"]');
+      const email = contactForm.querySelector('input[name="email"]');
+
+      if (!contactForm.checkValidity()) {
+        contactStatus.textContent = "Please complete the required fields.";
+        contactForm.reportValidity();
+        return;
+      }
+
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+        contactStatus.textContent = "Please enter a valid email address.";
+        email.focus();
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+      contactStatus.textContent = "";
+
+      try {
+        const formData = new FormData(contactForm);
+        const response = await fetch("/__forms.html", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(formData).toString()
+        });
+
+        if (!response.ok) throw new Error("Submission failed");
+        contactForm.style.display = "none";
+        contactSuccess.classList.add("is-visible");
+      } catch (error) {
+        contactStatus.textContent = "Something went wrong. Please try again.";
+      } finally {
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Send Message <i data-lucide="arrow-right" class="h-4 w-4"></i>';
+        lucide.createIcons();
+      }
+    });
+
+    const revealItems = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.14, rootMargin: "0px 0px -48px 0px" });
+      revealItems.forEach((item) => revealObserver.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+    }
+  </script>
+</body>
+</html>

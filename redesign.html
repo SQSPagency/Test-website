@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Squarespace Website Redesign | SQSP Agency</title>
+  <meta name="description" content="Squarespace website redesign for service businesses that need clearer messaging, better structure, stronger trust signals and more enquiries.">
+  <link rel="canonical" href="https://sqsp-test-website.netlify.app/redesign.html">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Inter', sans-serif; }.fillout-fullscreen-root { position: fixed; inset: 0; z-index: 10000; background: #0f172a; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 420ms ease, visibility 0s linear 420ms; }
+    .fillout-fullscreen-root.is-open { opacity: 1; visibility: visible; pointer-events: auto; transition-delay: 0s; }
+    .fillout-fullscreen-panel { position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; transform: translateY(10px) scale(0.992); transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1); }
+    .fillout-fullscreen-root.is-open .fillout-fullscreen-panel { transform: translateY(0) scale(1); }
+    .fillout-close { position: fixed; top: 18px; right: 18px; z-index: 10001; width: 44px; height: 44px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.18); color: #fff; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.28); transition: transform 220ms ease, background 220ms ease, border-color 220ms ease; }
+    .fillout-close:hover { transform: scale(1.04); background: #111c33; border-color: rgba(255, 255, 255, 0.32); }
+    body.form-open { overflow: hidden; }.reveal { opacity: 0; transform: translateY(20px); transition: opacity 700ms ease, transform 700ms ease; }.reveal.is-visible { opacity: 1; transform: translateY(0); }@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+    body { opacity: 0; transition: opacity 360ms ease; }
+    body.page-ready { opacity: 1; }
+    body.page-leaving { opacity: 0; }
+    .mobile-menu {
+      display: block;
+      opacity: 0;
+      transform: translateY(-10px) scale(0.985);
+      pointer-events: none;
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+    .mobile-menu.is-open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    .mobile-menu.hidden { display: block; }
+    .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      background: rgba(255, 255, 255, 0.92);
+      opacity: 0;
+      transition: opacity 300ms ease;
+    }
+    body.page-leaving .page-transition-overlay { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      body,
+      .mobile-menu,
+      .page-transition-overlay {
+        transition: none;
+      }
+    }
+    @media (min-width: 1024px) {
+      .mobile-menu {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased bg-white text-slate-900">
+  <div class="page-transition-overlay" aria-hidden="true"></div>
+  <nav class="fixed top-0 w-full z-50 p-6 flex justify-between items-center bg-white/85 backdrop-blur-md border-b border-slate-100">
+    <a href="index.html" class="flex items-center gap-2 text-slate-950"><i data-lucide="layers" class="w-6 h-6 stroke-[1.5]"></i><span class="text-sm font-semibold tracking-tight">SQSP Agency</span></a>
+    <div class="hidden lg:flex items-center gap-6 text-xs font-medium text-slate-600"><a href="design.html" class="hover:text-slate-950">Web Design</a><a href="redesign.html" class="text-slate-950">Redesign</a><a href="seo.html" class="hover:text-slate-950">Marketing</a></div>
+    <div class="flex items-center gap-3"><a href="https://form.fillout.com/t/bLBrXspQatus" class="js-fillout-trigger hidden sm:inline-flex px-5 py-2 rounded-full bg-slate-950 text-white text-xs font-medium hover:bg-slate-800">Get Started</a><button type="button" class="menu-toggle lg:hidden w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center" aria-label="Open navigation menu" aria-expanded="false"><i data-lucide="menu" class="menu-icon-open w-5 h-5 stroke-[1.5]"></i><i data-lucide="x" class="menu-icon-close hidden w-5 h-5 stroke-[1.5]"></i></button></div>
+    <div class="mobile-menu absolute top-[76px] left-4 right-4 rounded-2xl bg-white text-slate-950 shadow-2xl border border-slate-100 p-4 lg:hidden"><div class="grid gap-1 text-sm font-medium"><a href="design.html" class="px-4 py-3 rounded-xl hover:bg-slate-100">Web Design</a><a href="redesign.html" class="px-4 py-3 rounded-xl bg-slate-100">Redesign</a><a href="seo.html" class="px-4 py-3 rounded-xl hover:bg-slate-100">Marketing</a><a href="index.html" class="px-4 py-3 rounded-xl hover:bg-slate-100">Home</a><a href="https://form.fillout.com/t/bLBrXspQatus" class="js-fillout-trigger mt-2 px-4 py-3 rounded-xl bg-slate-950 text-white text-center">Get Started</a></div></div>
+  </nav>
+  <main>
+    <section class="reveal pt-36 pb-24 px-6 bg-slate-50">
+      <div class="max-w-6xl mx-auto">
+        <span class="text-xs font-medium uppercase tracking-widest text-slate-500 mb-4 block">Squarespace Website Redesign</span>
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-[1.05] max-w-4xl mb-6">Turn an underperforming Squarespace site into a clearer sales asset.</h1>
+        <p class="text-lg text-slate-600 font-light leading-relaxed max-w-3xl mb-8">If your current website looks dated, feels confusing or is not generating the right enquiries, we can restructure and redesign it around clarity, credibility and conversion.</p>
+        <button type="button" class="js-fillout-trigger px-7 py-3 rounded-full bg-slate-950 text-white text-sm font-medium hover:bg-slate-800">Request a Redesign Review</button>
+      </div>
+    </section>
+    <section class="reveal py-24 px-6">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div><h2 class="text-2xl font-medium mb-4">Common redesign problems</h2><p class="text-slate-600 leading-relaxed">Unclear services, weak calls to action, poor mobile layout, outdated visuals, slow pages, thin SEO foundations and a visitor journey that does not guide people to enquire.</p></div>
+        <div><h2 class="text-2xl font-medium mb-4">What we improve</h2><p class="text-slate-600 leading-relaxed">Messaging, layout, visual hierarchy, page structure, enquiry flow, trust signals, mobile experience, SEO basics and the overall polish of your Squarespace presence.</p></div>
+      </div>
+    </section>
+    <section class="reveal py-24 px-6 bg-slate-950 text-white text-center"><div class="max-w-3xl mx-auto"><h2 class="text-3xl md:text-5xl font-medium tracking-tight mb-6">Want to know what your site needs?</h2><p class="text-white/70 mb-8">Send over your details and we will look at the best way to improve your Squarespace website.</p><button type="button" class="js-fillout-trigger px-8 py-4 rounded-full bg-white text-slate-950 text-sm font-semibold">Open Redesign Form</button></div></section>
+  </main>
+  <footer class="py-10 px-6 border-t border-slate-200 text-sm text-slate-500"><div class="max-w-6xl mx-auto flex justify-between"><span>© 2025 SQSP Agency</span><a href="index.html" class="hover:text-slate-950">Home</a></div></footer>
+  <div class="fillout-fullscreen-root" id="fillout-fullscreen" aria-hidden="true">
+    <div class="fillout-fullscreen-panel">
+      <button type="button" class="fillout-close" aria-label="Close form"><i data-lucide="x" class="w-5 h-5"></i></button>
+      <div data-fillout-id="bLBrXspQatus" data-fillout-embed-type="fullscreen" style="width:100%;height:100%;" data-fillout-inherit-parameters></div>
+    </div>
+  </div>
+  <script src="https://server.fillout.com/embed/v1/"></script>
+  <script>lucide.createIcons(); const filloutFormUrl = "https://form.fillout.com/t/bLBrXspQatus"; const filloutRoot = document.querySelector(".fillout-fullscreen-root"); const filloutClose = document.querySelector(".fillout-close"); function openFilloutForm(event) { event.preventDefault(); if (filloutRoot) { filloutRoot.classList.add("is-open"); filloutRoot.setAttribute("aria-hidden", "false"); document.body.classList.add("form-open"); return; } window.open(filloutFormUrl, "_blank", "noopener,noreferrer"); } function closeFilloutForm() { if (!filloutRoot) return; filloutRoot.classList.remove("is-open"); filloutRoot.setAttribute("aria-hidden", "true"); document.body.classList.remove("form-open"); } filloutClose?.addEventListener("click", closeFilloutForm); document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeFilloutForm(); }); document.querySelectorAll(".js-fillout-trigger").forEach((trigger) => trigger.addEventListener("click", openFilloutForm)); const menuToggle = document.querySelector(".menu-toggle"); const mobileMenu = document.querySelector(".mobile-menu"); if (menuToggle && mobileMenu) { menuToggle.addEventListener("click", () => { const isOpen = mobileMenu.classList.contains("is-open"); mobileMenu.classList.toggle("is-open", !isOpen); menuToggle.setAttribute("aria-expanded", String(!isOpen)); document.querySelector(".menu-icon-open")?.classList.toggle("hidden", !isOpen); document.querySelector(".menu-icon-close")?.classList.toggle("hidden", isOpen); }); } document.body.classList.add("page-ready");
+
+    document.querySelectorAll('a[href^="/"], a[href^="./"], a[href^="../"], a[href$=".html"]').forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const href = link.getAttribute("href");
+        if (!href || link.target || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        if (mobileMenu) {
+          mobileMenu.classList.remove("is-open");
+          menuToggle?.setAttribute("aria-expanded", "false");
+          document.querySelector(".menu-icon-open")?.classList.remove("hidden");
+          document.querySelector(".menu-icon-close")?.classList.add("hidden");
+        }
+        document.body.classList.add("page-leaving");
+        window.setTimeout(() => { window.location.href = href; }, 260);
+      });
+    });
+
+    const revealItems = document.querySelectorAll(".reveal"); if ("IntersectionObserver" in window) { const revealObserver = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add("is-visible"); revealObserver.unobserve(entry.target); } }); }, { threshold: 0.14, rootMargin: "0px 0px -48px 0px" }); revealItems.forEach((item) => revealObserver.observe(item)); } else { revealItems.forEach((item) => item.classList.add("is-visible")); }</script>
+</body>
+</html>

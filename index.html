@@ -3,15 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Squarespace Web Design & Marketing | SQSP Agency</title>
-  <meta name="description" content="Squarespace web design, redesign and marketing for coaches, consultants, therapists and service businesses that need clearer websites and better enquiries.">
-  <link rel="canonical" href="https://sqsp-test-website.netlify.app/">
+  <title>Squarespace Websites, Fixed Properly | SQSP Agency</title>
+  <meta name="description" content="Squarespace website design, redesign, SEO setup and support for business owners who want a sharper, more polished site.">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    .hero-overlay { background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5)); }
+    body { font-family: 'Inter', sans-serif; opacity: 0; transition: opacity 360ms ease; }
+    body.page-ready { opacity: 1; }
+    body.page-leaving { opacity: 0; }
+    body.form-open { overflow: hidden; }
+    .page-transition-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      background: rgba(255, 255, 255, 0.92);
+      opacity: 0;
+      transition: opacity 300ms ease;
+    }
+    body.page-leaving .page-transition-overlay { opacity: 1; }
+    .site-nav {
+      position: fixed;
+      transform: translateZ(0);
+    }
+    .site-nav-shell {
+      background: rgba(126, 119, 108, 0.44);
+      border-color: rgba(255, 255, 255, 0.24);
+      box-shadow: 0 18px 42px rgba(10, 16, 30, 0.14);
+    }
+    .mobile-menu {
+      display: block;
+      opacity: 0;
+      transform: translateY(-10px) scale(0.985);
+      pointer-events: none;
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+    .mobile-menu.is-open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    .hero-video {
+      filter: saturate(0.82) sepia(0.18) brightness(0.86) contrast(0.96);
+    }
+    .hero-overlay {
+      background:
+        linear-gradient(to bottom, rgba(35, 29, 24, 0.12), rgba(18, 15, 13, 0.56)),
+        linear-gradient(90deg, rgba(92, 75, 58, 0.18), rgba(10, 16, 30, 0.08));
+    }
     .hero-cta {
       position: relative;
       display: inline-flex;
@@ -63,16 +103,6 @@
       transform: translateX(3px);
       background: #000000;
     }
-    .fillout-fullscreen-root { position: fixed; inset: 0; z-index: 10000; background: #0f172a; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 420ms ease, visibility 0s linear 420ms; }
-    .fillout-fullscreen-root.is-open { opacity: 1; visibility: visible; pointer-events: auto; transition-delay: 0s; }
-    .fillout-fullscreen-panel { position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; transform: translateY(10px) scale(0.992); transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1); }
-    .fillout-fullscreen-root.is-open .fillout-fullscreen-panel { transform: translateY(0) scale(1); }
-    .fillout-close { position: fixed; top: 18px; right: 18px; z-index: 10001; width: 44px; height: 44px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.18); color: #fff; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.28); transition: transform 220ms ease, background 220ms ease, border-color 220ms ease; }
-    .fillout-close:hover { transform: scale(1.04); background: #111c33; border-color: rgba(255, 255, 255, 0.32); }
-    body.form-open { overflow: hidden; }
-    .visuals-intro {
-      background: radial-gradient(circle at 50% 0%, rgba(15, 23, 42, 0.08), transparent 34%), #ffffff;
-    }
     .brand-pill-button {
       position: relative;
       display: inline-flex;
@@ -87,81 +117,408 @@
       transition: transform 260ms ease, box-shadow 260ms ease, background 260ms ease, border-color 260ms ease;
     }
     .brand-pill-button-primary {
-      background: #0f172a;
+      background: #0b1220;
       color: #ffffff;
       box-shadow: 0 16px 34px rgba(15, 23, 42, 0.18);
     }
     .brand-pill-button-primary:hover {
       transform: translateY(-2px);
-      background: #111c33;
+      background: #0b1220;
       box-shadow: 0 20px 40px rgba(15, 23, 42, 0.24);
     }
     .brand-pill-button-secondary {
       border: 1px solid rgba(15, 23, 42, 0.12);
       background: #ffffff;
-      color: #0f172a;
+      color: #0b1220;
     }
     .brand-pill-button-secondary:hover {
       transform: translateY(-2px);
       border-color: rgba(15, 23, 42, 0.22);
       box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
     }
-    .estimate-inline-link {
+    .brand-pill-icon {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      color: inherit;
-      text-decoration: underline;
-      text-underline-offset: 4px;
-      text-decoration-color: rgba(255, 255, 255, 0.32);
-      transition: text-decoration-color 220ms ease, opacity 220ms ease;
+      justify-content: center;
+      width: clamp(28px, 2.5vw, 32px);
+      height: clamp(28px, 2.5vw, 32px);
+      margin-right: -12px;
+      border-radius: 999px;
+      color: #0b1220;
+      background: #ffffff;
+      flex: 0 0 auto;
+      transition: transform 240ms ease, background 240ms ease, color 240ms ease;
     }
-    .estimate-inline-link:hover {
-      text-decoration-color: currentColor;
+    .brand-pill-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke-width: 2;
     }
-    .faq-item {
-      border: 1px solid rgba(15, 23, 42, 0.08);
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.92);
-      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
-      overflow: hidden;
-      transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+    .brand-pill-button:hover .brand-pill-icon {
+      transform: translate(2px, -2px) rotate(-35deg);
     }
-    .faq-item:hover {
-      transform: translateY(-1px);
-      border-color: rgba(15, 23, 42, 0.14);
-      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+    .brand-pill-button-secondary .brand-pill-icon {
+      color: #ffffff;
+      background: #0b1220;
     }
-    .faq-question {
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .image-reveal {
+      opacity: 0;
+      transform: scale(1.025);
+      transition: opacity 900ms ease, transform 900ms ease;
+    }
+    .image-reveal.is-visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .hero-stagger {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: heroFadeUp 780ms ease forwards;
+    }
+    .hero-stagger:nth-child(2) { animation-delay: 120ms; }
+    .hero-stagger:nth-child(3) { animation-delay: 240ms; }
+    .hero-stagger:nth-child(4) { animation-delay: 320ms; }
+    @keyframes heroFadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .review-form-root {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: #f7f8fa;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 420ms ease, visibility 0s linear 420ms;
+    }
+    .review-form-root.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition-delay: 0s;
+    }
+    .review-form-panel {
+      min-height: 100dvh;
       width: 100%;
+      max-width: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      transform: translateY(10px) scale(0.992);
+      transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+      box-sizing: border-box;
+    }
+    .review-form-root.is-open .review-form-panel { transform: translateY(0) scale(1); }
+    .review-form-shell {
+      min-height: 100dvh;
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: clamp(18px, 4vw, 44px);
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+    .review-form-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      padding: 24px 28px;
-      text-align: left;
-      color: #0f172a;
+      gap: 16px;
+      margin-bottom: clamp(24px, 5vh, 54px);
     }
-    .faq-icon {
+    .review-top-back {
+      min-height: 44px;
+      border: 1px solid rgba(15, 23, 42, 0.1);
+      border-radius: 999px;
+      background: #ffffff;
+      color: #0b1220;
+      padding: 0 16px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: opacity 180ms ease, transform 180ms ease, border-color 180ms ease;
+    }
+    .review-top-back:hover {
+      transform: translateY(-1px);
+      border-color: rgba(15, 23, 42, 0.2);
+    }
+    .review-top-back[disabled] {
+      opacity: 0.36;
+      pointer-events: none;
+    }
+    .review-progress-track {
+      height: 4px;
+      flex: 1;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.08);
+    }
+    .review-progress-bar {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: #0b1220;
+      transition: width 320ms ease;
+    }
+    .review-close {
+      position: fixed;
+      top: clamp(14px, 3vw, 22px);
+      right: clamp(14px, 3vw, 22px);
+      z-index: 10001;
+      width: 44px;
+      height: 44px;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0b1220;
+      border: 1px solid rgba(15, 23, 42, 0.18);
+      color: #fff;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.28);
+      transition: transform 220ms ease, background 220ms ease, border-color 220ms ease;
+    }
+    .review-close:hover {
+      transform: scale(1.04);
+      background: #0b1220;
+      border-color: rgba(15, 23, 42, 0.32);
+    }
+    .review-close:focus-visible,
+    .review-top-back:focus-visible,
+    .review-back:focus-visible,
+    .review-next:focus-visible,
+    .review-submit:focus-visible,
+    .review-choice:focus-visible,
+    .review-input:focus-visible {
+      outline: 3px solid rgba(15, 23, 42, 0.18);
+      outline-offset: 3px;
+    }
+    .review-form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      max-width: 100%;
+    }
+    .review-step {
+      display: none;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      animation: reviewStepIn 280ms ease both;
+    }
+    .review-step.is-active { display: block; }
+    .review-kicker {
+      margin-bottom: 16px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #647084;
+    }
+    .review-title {
+      font-size: clamp(2rem, 8vw, 4.8rem);
+      line-height: 0.98;
+      letter-spacing: 0;
+      font-weight: 500;
+      color: #0b1220;
+    }
+    .review-question {
+      font-size: clamp(2rem, 7vw, 4.35rem);
+      line-height: 1.02;
+      letter-spacing: 0;
+      font-weight: 500;
+      color: #0b1220;
+    }
+    .review-helper {
+      margin-top: 18px;
+      max-width: 620px;
+      color: #647084;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .review-options {
+      margin-top: clamp(26px, 5vw, 38px);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .review-choice {
+      min-height: 58px;
+      width: 100%;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      border-radius: 16px;
+      background: #ffffff;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      text-align: left;
+      color: #0b1220;
+      font-size: 15px;
+      font-weight: 500;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+    .review-choice:hover {
+      transform: translateY(-1px);
+      border-color: rgba(15, 23, 42, 0.24);
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.07);
+    }
+    .review-choice.is-selected {
+      background: #0b1220;
+      border-color: #0b1220;
+      color: #ffffff;
+      box-shadow: 0 18px 38px rgba(15, 23, 42, 0.18);
+    }
+    .review-choice-icon {
+      width: 22px;
+      height: 22px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.35;
       flex: 0 0 auto;
+    }
+    .review-choice.is-selected .review-choice-icon { opacity: 1; }
+    .review-field-wrap { margin-top: clamp(26px, 5vw, 38px); }
+    .review-input {
+      width: 100%;
+      max-width: 100%;
+      min-height: 58px;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      border-radius: 16px;
+      background: #ffffff;
+      padding: 16px 18px;
+      color: #0b1220;
+      font-size: 16px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04);
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+      box-sizing: border-box;
+    }
+    textarea.review-input {
+      min-height: 150px;
+      resize: vertical;
+    }
+    .review-input:focus {
+      border-color: #0b1220;
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.07);
+      outline: none;
+    }
+    .review-error {
+      min-height: 24px;
+      margin-top: 16px;
+      color: #b42318;
+      font-size: 14px;
+    }
+    .review-actions {
+      margin-top: clamp(24px, 5vw, 38px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .review-back,
+    .review-next,
+    .review-submit {
+      min-height: 48px;
+      border-radius: 999px;
+      padding: 0 24px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, opacity 180ms ease;
+    }
+    .review-back {
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      background: #ffffff;
+      color: #0b1220;
+    }
+    .review-back[disabled] {
+      opacity: 0.38;
+      pointer-events: none;
+    }
+    .review-next,
+    .review-submit {
+      border: 1px solid #0b1220;
+      background: #0b1220;
+      color: #ffffff;
+      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.18);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .review-back:hover,
+    .review-next:hover,
+    .review-submit:hover {
+      transform: translateY(-1px);
+    }
+    .review-forward-icon {
+      width: 34px;
+      height: 34px;
+      margin-right: -14px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 34px;
+      background: #ffffff;
+      color: #0b1220;
+      font-size: 18px;
+      line-height: 1;
       transition: transform 220ms ease;
     }
-    .faq-item.is-open .faq-icon {
-      transform: rotate(180deg);
+    .review-next:hover .review-forward-icon,
+    .review-submit:hover .review-forward-icon {
+      transform: translate(2px, -2px) rotate(-35deg);
     }
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 280ms ease;
+    .review-step[data-multiple="true"].is-active {
+      padding-bottom: 108px;
     }
-    .faq-answer-inner {
-      padding: 0 28px 24px;
-      color: #475569;
-      line-height: 1.75;
+    .review-step[data-multiple="true"] .review-question {
+      font-size: clamp(2rem, 5.8vw, 3.75rem);
+    }
+    .review-step[data-multiple="true"] .review-actions {
+      position: fixed;
+      left: 24px;
+      right: 24px;
+      bottom: 18px;
+      left: max(24px, calc((100vw - 760px) / 2));
+      right: max(24px, calc((100vw - 760px) / 2));
+      bottom: max(18px, env(safe-area-inset-bottom));
+      z-index: 10002;
+      margin: 0 auto;
+      max-width: 760px;
+      padding: 10px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 999px;
+      background: rgba(247, 248, 250, 0.94);
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .review-status {
+      margin-top: 18px;
+      color: #647084;
+      font-size: 14px;
+      min-height: 22px;
+    }
+    @keyframes reviewStepIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     #sqsp-video-scroll-01.sqsp-video-scroll-gallery {
-      width: 100vw;
-      margin-left: calc(50% - 50vw);
+      width: 100%;
       overflow: hidden;
       padding: clamp(28px, 5vw, 60px) 0;
       background: #ffffff;
@@ -201,52 +558,153 @@
       height: clamp(290px, 31vw, 430px);
       border-radius: clamp(22px, 2vw, 34px);
       overflow: hidden;
-      background: #f3f4f6;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+      background: #f3f3f3;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
     }
-    #sqsp-video-scroll-01 .sqsp-video-scroll-card video {
+    #sqsp-video-scroll-01 .sqsp-video-scroll-card video,
+    #sqsp-video-scroll-01 .sqsp-video-scroll-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
-    .reveal {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 700ms ease, transform 700ms ease;
-    }
-    .reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .hero-stagger {
-      opacity: 0;
-      transform: translateY(16px);
-      animation: heroFadeUp 780ms ease forwards;
-    }
-    .hero-stagger:nth-child(2) { animation-delay: 120ms; }
-    .hero-stagger:nth-child(3) { animation-delay: 240ms; }
-    .image-reveal {
-      opacity: 0;
-      transform: scale(1.025);
-      transition: opacity 900ms ease, transform 900ms ease;
-    }
-    .image-reveal.is-visible {
-      opacity: 1;
-      transform: scale(1);
-    }
-    @keyframes heroFadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
     @keyframes sqspVideoScrollLeft {
-      from {
-        transform: translate3d(0, 0, 0);
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(calc(-50% - 11px), 0, 0); }
+    }
+    @media (max-width: 640px) {
+      .review-form-shell {
+        min-height: 100dvh;
+        padding: 14px 16px max(18px, env(safe-area-inset-bottom));
       }
-      to {
-        transform: translate3d(calc(-50% - 11px), 0, 0);
+      .review-form-top {
+        margin-right: 54px;
+        margin-bottom: 18px;
+      }
+      .review-form {
+        justify-content: center;
+        padding: clamp(20px, 7dvh, 56px) 0 clamp(22px, 8dvh, 64px);
+      }
+      .review-step {
+        max-width: 100%;
+        padding-bottom: 0;
+      }
+      .review-form:has(.review-step[data-multiple="true"].is-active) {
+        justify-content: flex-start;
+        padding-top: 8px;
+        padding-bottom: 0;
+      }
+      .review-kicker {
+        margin-bottom: 10px;
+        font-size: 11px;
+      }
+      .review-question,
+      .review-title {
+        font-size: clamp(1.85rem, 9vw, 2.7rem);
+        line-height: 1.04;
+      }
+      .review-helper {
+        margin-top: 10px;
+        font-size: 0.98rem;
+        line-height: 1.45;
+      }
+      .review-options {
+        grid-template-columns: 1fr;
+        gap: 9px;
+        margin-top: 16px;
+      }
+      .review-choice {
+        min-height: 46px;
+        border-radius: 14px;
+        padding: 11px 14px;
+        font-size: 14px;
+      }
+      .review-actions {
+        align-items: stretch;
+        margin-top: 16px;
+      }
+      .review-step[data-multiple="true"] .review-actions {
+        left: 16px;
+        right: 16px;
+        bottom: 12px;
+        bottom: max(12px, env(safe-area-inset-bottom));
+        max-width: 728px;
+        padding: 8px;
+      }
+      .review-step[data-multiple="true"].is-active {
+        padding-bottom: 88px;
+      }
+      .review-step[data-multiple="true"] .review-question {
+        font-size: clamp(1.65rem, 8vw, 2.18rem);
+      }
+      .review-step[data-multiple="true"] .review-helper {
+        margin-top: 8px;
+      }
+      .review-step[data-multiple="true"] .review-options {
+        gap: 7px;
+        margin-top: 12px;
+      }
+      .review-step[data-multiple="true"] .review-choice {
+        min-height: 42px;
+        padding: 9px 12px;
+      }
+      .review-back,
+      .review-next,
+      .review-submit {
+        min-height: 50px;
+        padding: 0 18px;
+      }
+    }
+    @media (max-width: 360px) {
+      .review-form-shell {
+        padding: 12px 12px max(14px, env(safe-area-inset-bottom));
+      }
+      .review-form {
+        padding-top: clamp(16px, 5dvh, 36px);
+        padding-bottom: clamp(18px, 6dvh, 44px);
+      }
+      .review-question,
+      .review-title {
+        font-size: clamp(1.62rem, 9vw, 2.05rem);
+      }
+      .review-helper {
+        font-size: 0.92rem;
+      }
+      .review-choice {
+        min-height: 44px;
+        padding: 10px 12px;
+      }
+      .review-step[data-multiple="true"] .review-actions {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        padding: 7px;
+      }
+      .review-step[data-multiple="true"].is-active {
+        padding-bottom: 82px;
+      }
+      .review-step[data-multiple="true"] .review-choice {
+        min-height: 40px;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      body,
+      .mobile-menu,
+      .page-transition-overlay,
+      .reveal,
+      .image-reveal {
+        transition: none;
+      }
+      .hero-stagger {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+      #sqsp-video-scroll-01 .sqsp-video-scroll-track {
+        animation: none;
+      }
+      #sqsp-video-scroll-01.sqsp-video-scroll-gallery {
+        overflow-x: auto;
       }
     }
     @media (max-width: 767px) {
@@ -277,6 +735,9 @@
         animation-play-state: paused;
       }
     }
+    @media (min-width: 1024px) {
+      .mobile-menu { display: none; }
+    }
     @media (min-width: 1200px) {
       #sqsp-video-scroll-01 .sqsp-video-scroll-card {
         flex-basis: 320px;
@@ -284,430 +745,835 @@
         height: 410px;
       }
     }
-    @media (prefers-reduced-motion: reduce) {
-      .reveal,
-      .hero-stagger,
-      .image-reveal,
-      #sqsp-video-scroll-01 .sqsp-video-scroll-track {
-        animation: none;
-        opacity: 1;
-        transform: none;
-        transition: none;
-      }
-      #sqsp-video-scroll-01.sqsp-video-scroll-gallery {
-        overflow-x: auto;
-      }
-    }
-  
-    body { opacity: 0; transition: opacity 360ms ease; }
-    body.page-ready { opacity: 1; }
-    body.page-leaving { opacity: 0; }
-    .site-nav {
-      position: fixed;
-      transform: translateZ(0);
-    }
-    .site-nav-shell {
-      background: rgba(15, 23, 42, 0.46);
-      border-color: rgba(255, 255, 255, 0.22);
-      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.16);
-    }
-    .mobile-menu {
-      display: block;
-      opacity: 0;
-      transform: translateY(-10px) scale(0.985);
-      pointer-events: none;
-      transition: opacity 220ms ease, transform 220ms ease;
-    }
-    .mobile-menu.is-open {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      pointer-events: auto;
-    }
-    .mobile-menu.hidden { display: block; }
-    .page-transition-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      pointer-events: none;
-      background: rgba(255, 255, 255, 0.92);
-      opacity: 0;
-      transition: opacity 300ms ease;
-    }
-    body.page-leaving .page-transition-overlay { opacity: 1; }
-    @media (prefers-reduced-motion: reduce) {
-      body,
-      .mobile-menu,
-      .page-transition-overlay {
-        transition: none;
-      }
-    }
-    @media (min-width: 1024px) {
-      .mobile-menu {
-        display: none;
-      }
-    }
   </style>
 </head>
-<body class="antialiased bg-white text-slate-900">
+<body class="antialiased bg-white text-[#0b1220]">
   <div class="page-transition-overlay" aria-hidden="true"></div>
+
   <nav class="site-nav top-0 left-0 right-0 z-50 p-4 md:p-6">
-    <div class="site-nav-shell mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/15 bg-black/10 px-4 py-3 text-white/90 backdrop-blur-md md:px-5">
-    <a href="index.html" class="flex items-center gap-2">
-      <div class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-        <i data-lucide="layers" class="w-5 h-5 text-white stroke-[1.5]"></i>
+    <div class="mx-auto mb-3 hidden max-w-7xl justify-center sm:flex">
+      <a href="#review" class="js-free-review-trigger rounded-full border border-white/[0.18] bg-white/[0.12] px-4 py-2 text-[11px] font-medium uppercase tracking-[0.22em] text-white/90 backdrop-blur-md transition-colors hover:bg-white hover:text-[#0b1220]">Free Squarespace Website Review</a>
+    </div>
+    <div class="site-nav-shell mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/15 px-4 py-3 text-white/90 backdrop-blur-md md:px-5">
+      <a href="index.html" class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+          <i data-lucide="layers" class="w-5 h-5 text-white stroke-[1.5]"></i>
+        </div>
+        <span class="text-sm font-medium tracking-tight">SQSP Agency</span>
+      </a>
+      <div class="hidden lg:flex items-center gap-6 text-xs font-medium">
+        <a href="#services" class="hover:text-white transition-colors">Services</a>
+        <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+        <a href="#process" class="hover:text-white transition-colors">How It Works</a>
+        <a href="#review" class="hover:text-white transition-colors">Review</a>
+        <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
       </div>
-      <span class="text-sm font-medium tracking-tight">SQSP Agency</span>
-    </a>
-    <div class="hidden lg:flex items-center gap-6 text-xs font-medium">
-      <a href="squarespace-web-design.html" class="hover:text-white transition-colors">Web Design</a>
-      <a href="website-redesign.html" class="hover:text-white transition-colors">Redesign</a>
-      <a href="digital-marketing.html" class="hover:text-white transition-colors">Marketing</a>
-      <a href="https://sqsp-estimate-quiz.netlify.app" class="hover:text-white transition-colors">Estimate</a>
-      <a href="#contact" class="hover:text-white transition-colors">Contact</a>
-    </div>
-    <div class="flex items-center gap-3">
-      <a href="https://form.fillout.com/t/bLBrXspQatus" class="js-fillout-trigger hidden sm:inline-flex px-5 py-2 rounded-full bg-white text-slate-900 text-xs font-medium hover:bg-slate-100 transition-colors">Get Started</a>
-      <button type="button" class="menu-toggle lg:hidden w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center" aria-label="Open navigation menu" aria-expanded="false">
-        <i data-lucide="menu" class="menu-icon-open w-5 h-5 text-white stroke-[1.5]"></i>
-        <i data-lucide="x" class="menu-icon-close hidden w-5 h-5 text-white stroke-[1.5]"></i>
-      </button>
-    </div>
-    <div class="mobile-menu absolute top-[76px] left-4 right-4 rounded-2xl bg-white/95 text-slate-950 shadow-2xl backdrop-blur-md border border-white/40 p-4 lg:hidden">
-      <div class="grid gap-1 text-sm font-medium">
-        <a href="squarespace-web-design.html" class="px-4 py-3 rounded-xl hover:bg-slate-100">Web Design</a>
-        <a href="website-redesign.html" class="px-4 py-3 rounded-xl hover:bg-slate-100">Redesign</a>
-        <a href="digital-marketing.html" class="px-4 py-3 rounded-xl hover:bg-slate-100">Marketing</a>
-        <a href="https://sqsp-estimate-quiz.netlify.app" class="px-4 py-3 rounded-xl hover:bg-slate-100">Instant Estimate</a>
-        <a href="#contact" class="px-4 py-3 rounded-xl hover:bg-slate-100">Contact</a>
-        <a href="https://form.fillout.com/t/bLBrXspQatus" class="js-fillout-trigger mt-2 px-4 py-3 rounded-xl bg-slate-950 text-white text-center">Get Started</a>
+      <div class="flex items-center gap-3">
+        <a href="#review" class="js-free-review-trigger hidden sm:inline-flex px-5 py-2 rounded-full bg-white text-[#0b1220] text-xs font-medium hover:bg-slate-100 transition-colors">Free Review</a>
+        <button type="button" class="menu-toggle lg:hidden w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center" aria-label="Open navigation menu" aria-expanded="false">
+          <i data-lucide="menu" class="menu-icon-open w-5 h-5 text-white stroke-[1.5]"></i>
+          <i data-lucide="x" class="menu-icon-close hidden w-5 h-5 text-white stroke-[1.5]"></i>
+        </button>
       </div>
-    </div>
+      <div class="mobile-menu absolute top-[76px] left-4 right-4 rounded-2xl bg-white/95 text-[#0b1220] shadow-2xl backdrop-blur-md border border-white/40 p-4 lg:hidden">
+        <div class="grid gap-1 text-sm font-medium">
+          <a href="#services" class="px-4 py-3 rounded-xl hover:bg-slate-100">Services</a>
+          <a href="#pricing" class="px-4 py-3 rounded-xl hover:bg-slate-100">Pricing</a>
+          <a href="#process" class="px-4 py-3 rounded-xl hover:bg-slate-100">How It Works</a>
+          <a href="contact.html" class="px-4 py-3 rounded-xl hover:bg-slate-100">Contact</a>
+          <a href="#review" class="js-free-review-trigger mt-2 px-4 py-3 rounded-xl bg-[#0b1220] text-white text-center">Free Website Review</a>
+        </div>
+      </div>
     </div>
   </nav>
 
-  <header class="relative w-full h-screen min-h-[700px] flex items-center justify-center text-center px-4 overflow-hidden">
+  <header class="relative flex min-h-[760px] w-full items-center justify-center overflow-hidden px-4 pt-28 text-center">
     <div class="absolute inset-0 z-0">
-      <video class="object-center w-full h-full object-cover" autoplay muted loop playsinline poster="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/b2326ff2-54ea-4a4c-ad90-c4c03d43cd3a_3840w.png" aria-label="SQSP Agency background video">
-        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_36WSAu4b97GmrlP9MuvI3CupyKY/hf_20260508_223843_2385bdd6-ba1c-47e6-8912-5656850aee2e.mp4" type="video/mp4">
+      <video class="hero-video h-full w-full object-cover" autoplay muted loop playsinline preload="metadata" aria-label="Clean Squarespace website shown on laptop and mobile">
+        <source src="assets/contact-hero.mp4?v=2" type="video/mp4">
       </video>
       <div class="hero-overlay absolute inset-0"></div>
     </div>
-    <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center mt-10">
-      <h1 class="hero-stagger text-4xl md:text-6xl lg:text-7xl font-medium text-white tracking-tight leading-[1.1] mb-6">
-        Squarespace Web Design <br class="hidden md:block"> & Marketing, Hassle-Free
+    <div class="relative z-10 mx-auto mt-10 flex max-w-4xl flex-col items-center">
+      <span class="hero-stagger mb-5 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.24em] text-white/[0.85] backdrop-blur-md">Design · Redesign · SEO · Support</span>
+      <h1 class="hero-stagger mb-6 text-4xl font-medium leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl">
+        Squarespace Websites, Fixed Properly
       </h1>
-      <p class="hero-stagger text-base md:text-lg text-white/90 max-w-2xl font-light leading-relaxed mb-8">
-        From design to marketing, we handle it all-so you don't have to. Passionate, affordable, and results-driven, we're your long-term Squarespace partner. Build, scale, thrive.
+      <p class="hero-stagger mb-8 max-w-2xl text-base font-light leading-relaxed text-white/90 md:text-lg">
+        SQSP Agency builds, improves, finishes and optimises Squarespace sites for business owners who want a sharper site.
       </p>
       <div class="hero-stagger flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <button type="button" class="js-fillout-trigger hero-cta px-6 py-2.5 text-slate-950 rounded-full font-semibold text-sm transition-all duration-300">
-          <span>Start Your Project</span>
-          <span class="hero-cta-icon" aria-hidden="true"><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+        <button type="button" class="js-review-trigger hero-cta rounded-full px-6 py-2.5 text-sm font-semibold text-[#0b1220] transition-all duration-300">
+          <span>Get Squarespace Help</span>
+          <span class="hero-cta-icon" aria-hidden="true"><i data-lucide="arrow-right" class="h-3.5 w-3.5"></i></span>
         </button>
-        <a href="https://sqsp-estimate-quiz.netlify.app" class="px-6 py-2.5 rounded-full border border-white/30 bg-white/10 text-white text-sm font-semibold backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-slate-950">
-          Get Instant Estimate
+        <a href="#review" class="js-free-review-trigger rounded-full border border-white/30 bg-white/10 px-6 py-2.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-[#0b1220]">
+          Free Website Review
         </a>
       </div>
     </div>
   </header>
 
-  <section class="reveal bg-[#0f172a] text-white py-16 md:py-20 px-6">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-      <div class="flex flex-wrap gap-8 md:gap-16">
-        <div><div class="text-3xl md:text-4xl font-normal tracking-tight">2025</div><div class="text-xs text-white/60 mt-1 uppercase tracking-wider">Circle Gold Partner</div></div>
-        <div><div class="text-3xl md:text-4xl font-normal tracking-tight">Google</div><div class="text-xs text-white/60 mt-1 uppercase tracking-wider">Ads Certified</div></div>
-        <div><div class="text-3xl md:text-4xl font-normal tracking-tight">Expert</div><div class="text-xs text-white/60 mt-1 uppercase tracking-wider">Digital Marketing</div></div>
+  <section class="reveal bg-[#101827] px-6 py-9 text-white md:py-11">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 gap-3 md:grid-cols-3 md:gap-4">
+      <div class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.045] px-5 py-5">
+        <span class="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-white/10 text-white/80"><i data-lucide="wand-sparkles" class="h-5 w-5"></i></span>
+        <p class="text-base font-light leading-snug tracking-tight text-white/90 md:text-lg">Cleaner first impression</p>
       </div>
-      <div class="md:pl-10 md:border-l border-white/10">
-        <p class="text-sm md:text-base text-white/80 leading-relaxed font-light">Results-driven digital marketing services specializing in PPC ads, SEO, social media, and email marketing. We are certified professionals dedicated to growing your business fast.</p>
-        <div class="mt-4 flex flex-col gap-3 text-sm text-white sm:flex-row sm:items-center">
-          <a href="https://sqsp-estimate-quiz.netlify.app" class="estimate-inline-link">Estimate your project <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i></a>
-          <a href="https://form.fillout.com/t/bLBrXspQatus" class="js-fillout-trigger estimate-inline-link text-white/80">View Certifications</a>
+      <div class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.045] px-5 py-5">
+        <span class="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-white/10 text-white/80"><i data-lucide="smartphone" class="h-5 w-5"></i></span>
+        <p class="text-base font-light leading-snug tracking-tight text-white/90 md:text-lg">Better mobile experience</p>
+      </div>
+      <div class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.045] px-5 py-5">
+        <span class="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-white/10 text-white/80"><i data-lucide="chart-no-axes-combined" class="h-5 w-5"></i></span>
+        <p class="text-base font-light leading-snug tracking-tight text-white/90 md:text-lg">Stronger SEO foundations</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal bg-[#f7f8fa] px-6 py-24">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 lg:grid-cols-2">
+      <div class="relative aspect-[4/3] overflow-hidden rounded-2xl">
+        <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260314_001250_8c6f6d48-e15a-4523-a2a8-e66bbe4dab8c.jpeg&w=1920&q=85" alt="Frustrated business owner reviewing an unfinished website" class="image-reveal absolute inset-0 h-full w-full object-cover">
+      </div>
+      <div>
+        <span class="mb-3 block text-xs font-medium uppercase tracking-widest text-slate-500">Website Clarity</span>
+        <h2 class="mb-8 text-3xl font-medium tracking-tight text-[#0b1220] md:text-5xl">Your site is live. But is it working?</h2>
+        <div class="space-y-5">
+          <div class="flex gap-4"><i data-lucide="check-circle-2" class="mt-1 h-5 w-5 flex-none text-[#0b1220]"></i><p class="text-lg font-light leading-relaxed text-slate-600">The layout feels close, but not polished.</p></div>
+          <div class="flex gap-4"><i data-lucide="check-circle-2" class="mt-1 h-5 w-5 flex-none text-[#0b1220]"></i><p class="text-lg font-light leading-relaxed text-slate-600">The mobile version looks awkward.</p></div>
+          <div class="flex gap-4"><i data-lucide="check-circle-2" class="mt-1 h-5 w-5 flex-none text-[#0b1220]"></i><p class="text-lg font-light leading-relaxed text-slate-600">The homepage does not guide visitors clearly.</p></div>
+          <div class="flex gap-4"><i data-lucide="check-circle-2" class="mt-1 h-5 w-5 flex-none text-[#0b1220]"></i><p class="text-lg font-light leading-relaxed text-slate-600">The SEO settings feel confusing or unfinished.</p></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="reveal visuals-intro px-6 py-20 md:py-28 text-center">
-    <div class="mx-auto max-w-5xl">
-      <span class="mb-4 block text-xs font-medium uppercase tracking-[0.28em] text-slate-500">Website Visual Direction</span>
-      <h2 class="mx-auto max-w-4xl text-4xl font-medium leading-[1.05] tracking-tight text-slate-950 md:text-6xl">
-        Squarespace websites that make your brand feel instantly clear.
-      </h2>
-      <p class="mx-auto mt-7 max-w-2xl text-base font-light leading-relaxed text-slate-600 md:text-lg">
-        From homepage storytelling to service visuals, we shape every section so visitors understand what you do, trust your expertise, and know exactly what to do next.
-      </p>
-      <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <a href="https://sqsp-estimate-quiz.netlify.app" class="brand-pill-button brand-pill-button-primary">
-          <span>Get Website Estimate</span>
-          <i data-lucide="arrow-right" class="h-4 w-4"></i>
-        </a>
-        <a href="#sqsp-video-scroll-01" class="brand-pill-button brand-pill-button-secondary">See Website Examples</a>
+  <section id="services" class="reveal bg-white px-6 py-24">
+    <div class="mx-auto max-w-7xl">
+      <div class="mb-16 max-w-3xl">
+        <span class="mb-2 block text-xs font-medium uppercase tracking-widest text-slate-500">Practical Squarespace Help</span>
+        <h2 class="mb-6 text-3xl font-medium tracking-tight text-[#0b1220] md:text-5xl">Cleaner design, clearer structure and support that makes the site easier to trust.</h2>
+        <div class="flex flex-wrap gap-3">
+          <span class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700"><i data-lucide="pen-tool" class="h-4 w-4"></i>Design</span>
+          <span class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700"><i data-lucide="search" class="h-4 w-4"></i>SEO</span>
+          <span class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700"><i data-lucide="messages-square" class="h-4 w-4"></i>Support</span>
+        </div>
       </div>
-      <p class="mt-8 text-[11px] font-medium uppercase tracking-[0.28em] text-slate-400">
-        Custom design - clear messaging - conversion focused
-      </p>
+      <div class="grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-3">
+        <div>
+          <div class="mb-6 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100"><i data-lucide="monitor" class="h-5 w-5 stroke-[1.5] text-[#0b1220]"></i></div>
+          <h3 class="mb-3 text-xl font-medium tracking-tight">Custom Website Design</h3>
+          <p class="mb-5 text-sm leading-relaxed text-slate-600">A complete Squarespace website built around your business, offer and customer journey.</p>
+          <a href="design.html" class="text-sm font-medium underline decoration-slate-300 underline-offset-4 transition-all hover:decoration-slate-900">View design service</a>
+        </div>
+        <div>
+          <div class="mb-6 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100"><i data-lucide="refresh-cw" class="h-5 w-5 stroke-[1.5] text-[#0b1220]"></i></div>
+          <h3 class="mb-3 text-xl font-medium tracking-tight">Website Redesign</h3>
+          <p class="mb-5 text-sm leading-relaxed text-slate-600">Improve your current site's layout, flow, mobile view and professional finish.</p>
+          <a href="redesign.html" class="text-sm font-medium underline decoration-slate-300 underline-offset-4 transition-all hover:decoration-slate-900">View redesign service</a>
+        </div>
+        <div>
+          <div class="mb-6 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100"><i data-lucide="life-buoy" class="h-5 w-5 stroke-[1.5] text-[#0b1220]"></i></div>
+          <h3 class="mb-3 text-xl font-medium tracking-tight">SEO & Site Support</h3>
+          <p class="mb-5 text-sm leading-relaxed text-slate-600">Get expert help with SEO setup, fixes, templates, launch support and live guidance.</p>
+          <a href="seo.html" class="text-sm font-medium underline decoration-slate-300 underline-offset-4 transition-all hover:decoration-slate-900">View SEO support</a>
+        </div>
+      </div>
+      <div class="mt-14">
+        <button type="button" class="js-review-trigger brand-pill-button brand-pill-button-primary">Start Your Project <span class="brand-pill-icon" aria-hidden="true"><i data-lucide="arrow-right"></i></span></button>
+      </div>
     </div>
   </section>
 
-  <section id="sqsp-video-scroll-01" class="reveal sqsp-video-scroll-gallery" aria-label="Squarespace website video showcase">
+  <section class="reveal bg-[#0b1220] px-6 py-24 text-white">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <span class="mb-3 block text-xs font-medium uppercase tracking-widest text-white/50">Direct Support</span>
+        <h2 class="mb-6 text-3xl font-medium tracking-tight md:text-5xl">Squarespace help with design and strategy</h2>
+        <p class="text-lg font-light leading-relaxed text-white/75">Work directly with SQSP Agency for cleaner design, clearer structure, stronger SEO foundations and practical support without bloated agency layers.</p>
+      </div>
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div class="rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-5 text-center text-xs font-medium uppercase tracking-[0.18em] text-white/[0.55]">Client Logo</div>
+        <div class="rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-5 text-center text-xs font-medium uppercase tracking-[0.18em] text-white/[0.55]">Client Logo</div>
+        <div class="rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-5 text-center text-xs font-medium uppercase tracking-[0.18em] text-white/[0.55]">Client Logo</div>
+        <div class="rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-5 text-center text-xs font-medium uppercase tracking-[0.18em] text-white/[0.55]">Client Logo</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sqsp-video-scroll-01" class="sqsp-video-scroll-gallery">
     <div class="sqsp-video-scroll-row sqsp-video-scroll-row-one">
       <div class="sqsp-video-scroll-track">
         <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_144509_89e2d612-8af2-45c3-90f4-4831bc60715d.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_101827_abebfeec-f243-466b-b494-7f6814c0fbbf.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_36WSAu4b97GmrlP9MuvI3CupyKY/hf_20260510_133712_a93709b2-bd1c-43b6-acce-03b788a47b9d.mp4" type="video/mp4"></video></div>
         <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_115139_0fc6bd3d-3631-4d26-ab9b-28293887dcc9.mp4" type="video/mp4"></video></div>
         <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_144509_89e2d612-8af2-45c3-90f4-4831bc60715d.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_101827_abebfeec-f243-466b-b494-7f6814c0fbbf.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_115139_0fc6bd3d-3631-4d26-ab9b-28293887dcc9.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_36WSAu4b97GmrlP9MuvI3CupyKY/hf_20260510_134818_da5b230e-b83a-4a46-a157-ce64da69a0c6.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_144509_89e2d612-8af2-45c3-90f4-4831bc60715d.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_36WSAu4b97GmrlP9MuvI3CupyKY/hf_20260510_133712_a93709b2-bd1c-43b6-acce-03b788a47b9d.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_115139_0fc6bd3d-3631-4d26-ab9b-28293887dcc9.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_36WSAu4b97GmrlP9MuvI3CupyKY/hf_20260510_134818_da5b230e-b83a-4a46-a157-ce64da69a0c6.mp4" type="video/mp4"></video></div>
       </div>
     </div>
-
     <div class="sqsp-video-scroll-row sqsp-video-scroll-row-two">
       <div class="sqsp-video-scroll-track sqsp-video-scroll-track-reverse">
         <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260428_193507_4286c423-2fd9-4efd-92bd-91a939453fc1.mp4" type="video/mp4"></video></div>
         <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_101827_abebfeec-f243-466b-b494-7f6814c0fbbf.mp4" type="video/mp4"></video></div>
         <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_144509_89e2d612-8af2-45c3-90f4-4831bc60715d.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260428_193507_4286c423-2fd9-4efd-92bd-91a939453fc1.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_101827_abebfeec-f243-466b-b494-7f6814c0fbbf.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card" aria-hidden="true"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_144509_89e2d612-8af2-45c3-90f4-4831bc60715d.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_36WSAu4b97GmrlP9MuvI3CupyKY/hf_20260510_134736_a0e7336d-162c-431e-b383-edfae882341a.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_36WSAu4b97GmrlP9MuvI3CupyKY/hf_20260510_133529_7bdd358f-e7e5-4204-bc70-90d5486c65b6.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260428_193507_4286c423-2fd9-4efd-92bd-91a939453fc1.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_101827_abebfeec-f243-466b-b494-7f6814c0fbbf.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_36WSAu4b97GmrlP9MuvI3CupyKY/hf_20260510_134736_a0e7336d-162c-431e-b383-edfae882341a.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_36WSAu4b97GmrlP9MuvI3CupyKY/hf_20260510_133529_7bdd358f-e7e5-4204-bc70-90d5486c65b6.mp4" type="video/mp4"></video></div>
       </div>
     </div>
   </section>
 
-  <section class="reveal py-24 px-6 bg-white">
-    <div class="max-w-7xl mx-auto">
-      <div class="mb-16">
-        <span class="text-xs font-medium uppercase tracking-widest text-slate-500 mb-2 block">Our Expertise</span>
-        <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-slate-900 mb-6">Scale Faster & Grow Your Brand</h2>
-        <p class="text-lg text-slate-600 font-light max-w-2xl">Tell us which service you need help with. Whether you need a custom design, a high-converting template, or a marketing strategy.</p>
+  <section id="pricing" class="reveal bg-[#f7f8fa] px-6 py-24">
+    <div class="mx-auto max-w-7xl">
+      <div class="mb-14 max-w-3xl">
+        <span class="mb-2 block text-xs font-medium uppercase tracking-widest text-slate-500">Pricing</span>
+        <h2 class="text-3xl font-medium tracking-tight text-[#0b1220] md:text-5xl">Clear Starting Prices</h2>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-        <div class="group"><div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-6"><i data-lucide="monitor" class="w-5 h-5 text-slate-900 stroke-[1.5]"></i></div><h3 class="text-xl font-medium tracking-tight mb-3">Custom Squarespace Design</h3><p class="text-sm text-slate-600 leading-relaxed mb-4">Get a bespoke, high-converting Squarespace site tailored to your brand. Sleek, fast, and optimized for leads & engagement.</p><a href="squarespace-web-design.html" class="text-sm font-medium underline underline-offset-4 decoration-slate-300 hover:decoration-slate-900 transition-all">Learn More</a></div>
-        <div class="group"><div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-6"><i data-lucide="refresh-cw" class="w-5 h-5 text-slate-900 stroke-[1.5]"></i></div><h3 class="text-xl font-medium tracking-tight mb-3">Redesign Squarespace Website</h3><p class="text-sm text-slate-600 leading-relaxed mb-4">Transform your website's overall look and feel with our professional redesign services, tailored to enhance your online presence.</p><a href="website-redesign.html" class="text-sm font-medium underline underline-offset-4 decoration-slate-300 hover:decoration-slate-900 transition-all">Learn More</a></div>
-        <div class="group"><div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-6"><i data-lucide="layout-template" class="w-5 h-5 text-slate-900 stroke-[1.5]"></i></div><h3 class="text-xl font-medium tracking-tight mb-3">Squarespace Website Templates</h3><p class="text-sm text-slate-600 leading-relaxed mb-4">Launch faster with ready-made, customizable Squarespace templates designed for service-based businesses.</p><a href="https://form.fillout.com/t/bLBrXspQatus" class="js-fillout-trigger text-sm font-medium underline underline-offset-4 decoration-slate-300 hover:decoration-slate-900 transition-all">Explore Templates</a></div>
-        <div class="group"><div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mb-6"><i data-lucide="bar-chart-3" class="w-5 h-5 text-slate-900 stroke-[1.5]"></i></div><h3 class="text-xl font-medium tracking-tight mb-3">Digital Marketing for Squarespace</h3><p class="text-sm text-slate-600 leading-relaxed mb-4">Results-driven digital marketing services specializing in PPC ads, SEO, social media, and email marketing designed to grow your business.</p><a href="digital-marketing.html" class="text-sm font-medium underline underline-offset-4 decoration-slate-300 hover:decoration-slate-900 transition-all">Learn More</a></div>
+      <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+          <h3 class="mb-2 text-2xl font-medium tracking-tight">Support</h3>
+          <p class="mb-6 text-3xl font-light tracking-tight">From £95/hr</p>
+          <p class="mb-8 text-sm leading-relaxed text-slate-600">Live help for fixes, layout issues, SEO questions, templates and Squarespace guidance.</p>
+          <button type="button" class="js-review-trigger brand-pill-button brand-pill-button-secondary w-full">Get Started</button>
+        </div>
+        <div class="rounded-2xl border border-slate-900 bg-white p-8 shadow-xl shadow-slate-200/70">
+          <h3 class="mb-2 text-2xl font-medium tracking-tight">Redesign</h3>
+          <p class="mb-6 text-3xl font-light tracking-tight">From £1,295</p>
+          <p class="mb-8 text-sm leading-relaxed text-slate-600">Improve your current Squarespace site's design, structure, mobile view and polish.</p>
+          <button type="button" class="js-review-trigger brand-pill-button brand-pill-button-primary w-full">Get Started</button>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+          <h3 class="mb-2 text-2xl font-medium tracking-tight">Custom</h3>
+          <p class="mb-6 text-3xl font-light tracking-tight">From £1,995</p>
+          <p class="mb-8 text-sm leading-relaxed text-slate-600">A full Squarespace website designed and built around your business from the ground up.</p>
+          <button type="button" class="js-review-trigger brand-pill-button brand-pill-button-secondary w-full">Get Started</button>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="reveal py-24 px-6 bg-slate-50">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+  <section id="process" class="reveal bg-white px-6 py-24">
+    <div class="mx-auto max-w-7xl">
+      <div class="mb-14 flex flex-col justify-between gap-8 md:flex-row md:items-end">
+        <div>
+          <span class="mb-2 block text-xs font-medium uppercase tracking-widest text-slate-500">Process</span>
+          <h2 class="text-3xl font-medium tracking-tight text-[#0b1220] md:text-5xl">How It Works</h2>
+        </div>
+        <button type="button" class="js-review-trigger brand-pill-button brand-pill-button-primary self-start md:self-auto">Start Your Project <span class="brand-pill-icon" aria-hidden="true"><i data-lucide="arrow-right"></i></span></button>
+      </div>
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+        <div class="border-l border-slate-200 pl-6">
+          <span class="mb-5 block text-sm font-medium text-slate-400">01</span>
+          <h3 class="mb-3 text-xl font-medium tracking-tight">Send Your Website</h3>
+          <p class="text-sm leading-relaxed text-slate-600">Share your current site, or tell us what you want to build and what feels wrong.</p>
+        </div>
+        <div class="border-l border-slate-200 pl-6">
+          <span class="mb-5 block text-sm font-medium text-slate-400">02</span>
+          <h3 class="mb-3 text-xl font-medium tracking-tight">Get The Best Route</h3>
+          <p class="text-sm leading-relaxed text-slate-600">We review your design, mobile view, SEO basics, content, navigation and user journey.</p>
+        </div>
+        <div class="border-l border-slate-200 pl-6">
+          <span class="mb-5 block text-sm font-medium text-slate-400">03</span>
+          <h3 class="mb-3 text-xl font-medium tracking-tight">Improve And Launch</h3>
+          <p class="text-sm leading-relaxed text-slate-600">We design, redesign, fix, optimise or polish the site so it feels ready to share.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal bg-[#f7f8fa] px-6 py-24">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 lg:grid-cols-2">
       <div>
-        <span class="text-xs font-medium uppercase tracking-widest text-slate-500 mb-2 block">About SQSP Agency</span>
-        <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-slate-900 mb-6">Designed for Growth, Optimized for Impact</h2>
-        <p class="text-lg text-slate-600 font-light mb-6 leading-relaxed">We specialize in Squarespace design & marketing for coaches, consultants, and service-based businesses. Our goal? To turn your website into a sales machine with stunning designs, strategic marketing, and AI automation.</p>
-        <a href="https://form.fillout.com/t/bLBrXspQatus" class="js-fillout-trigger inline-flex items-center px-6 py-3 rounded-full bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-colors">Meet the Team</a>
+        <span class="mb-3 block text-xs font-medium uppercase tracking-widest text-slate-500">Finished Feel</span>
+        <h2 class="mb-6 text-3xl font-medium tracking-tight text-[#0b1220] md:text-5xl">A website that feels finished</h2>
+        <p class="mb-8 text-lg font-light leading-relaxed text-slate-600">Your Squarespace site should not feel like a template with your logo dropped in. It should guide people clearly, look professional on mobile and make your business easier to trust.</p>
+        <button type="button" class="js-free-review-trigger brand-pill-button brand-pill-button-primary">Get Website Review <span class="brand-pill-icon" aria-hidden="true"><i data-lucide="arrow-right"></i></span></button>
       </div>
-      <div class="relative rounded-2xl overflow-hidden aspect-[4/3]">
-        <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2F95393718-037d-46d3-b91a-f1b7b1822707.png&w=1920&q=85" alt="Squarespace website design preview" class="image-reveal absolute inset-0 w-full h-full object-cover">
-      </div>
-    </div>
-  </section>
-
-  <section class="reveal py-24 px-6 bg-white border-t border-slate-100">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-2xl font-medium tracking-tight mb-12">Industries We Serve</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        <div class="border-l border-slate-200 pl-6"><h3 class="text-lg font-medium mb-2">Consultants</h3><p class="text-sm text-slate-600 font-light">We create expert, results-focused websites and marketing for consultants.</p></div>
-        <div class="border-l border-slate-200 pl-6"><h3 class="text-lg font-medium mb-2">Home Services</h3><p class="text-sm text-slate-600 font-light">Showcase your skills and simplify client contact for home transformation services.</p></div>
-        <div class="border-l border-slate-200 pl-6"><h3 class="text-lg font-medium mb-2">Coaches</h3><p class="text-sm text-slate-600 font-light">Your website builds trust, guides clients, and drives bookings.</p></div>
-        <div class="border-l border-slate-200 pl-6"><h3 class="text-lg font-medium mb-2">Creators & Educators</h3><p class="text-sm text-slate-600 font-light">Attract students and earn money from your content.</p></div>
-        <div class="border-l border-slate-200 pl-6"><h3 class="text-lg font-medium mb-2">Health & Wellness</h3><p class="text-sm text-slate-600 font-light">We create caring and professional websites that connect with your clients.</p></div>
-        <div class="border-l border-slate-200 pl-6"><h3 class="text-lg font-medium mb-2">Professional Services</h3><p class="text-sm text-slate-600 font-light">Clean, effective websites helping professionals build trust.</p></div>
+      <div class="relative aspect-[4/3] overflow-hidden rounded-2xl">
+        <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2F95393718-037d-46d3-b91a-f1b7b1822707.png&w=1920&q=85" alt="Polished Squarespace website layout with clear sections and strong calls to action" class="image-reveal absolute inset-0 h-full w-full object-cover">
       </div>
     </div>
   </section>
 
-  <section class="reveal py-24 px-6 bg-slate-900 text-white">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-2xl font-normal tracking-tight mb-16 opacity-80">What our clients say</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-        <div><i data-lucide="quote" class="w-6 h-6 text-white/40 mb-6 stroke-[1.5]"></i><p class="text-lg font-light leading-relaxed mb-6">"Working with SQSP Agency was a game changer for my business. Their insights and design skills exceeded my expectations."</p><div><div class="font-medium">Emma Carter</div><div class="text-sm text-white/50">Life Coach, Nova</div></div></div>
-        <div><i data-lucide="quote" class="w-6 h-6 text-white/40 mb-6 stroke-[1.5]"></i><p class="text-lg font-light leading-relaxed mb-6">"We struggled with Google Ads until Rahim took over. Now we're consistently getting quality clients without wasting budget."</p><div><div class="font-medium">Emma Green</div><div class="text-sm text-white/50">Therapist</div></div></div>
-        <div><i data-lucide="quote" class="w-6 h-6 text-white/40 mb-6 stroke-[1.5]"></i><p class="text-lg font-light leading-relaxed mb-6">"We had no idea how much money we were leaving on the table until Rahim optimized our campaign. The ROI has been incredible."</p><div><div class="font-medium">Lisa Thompson</div><div class="text-sm text-white/50">Founder, Bright Coaching</div></div></div>
+  <section id="review" class="reveal bg-white px-6 py-24">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-12 lg:items-start">
+      <div class="lg:col-span-5">
+        <span class="mb-3 block text-xs font-medium uppercase tracking-widest text-slate-500">Free Review</span>
+        <h2 class="mb-5 text-3xl font-medium tracking-tight text-[#0b1220] md:text-5xl">Get a free Squarespace website review</h2>
+        <p class="text-lg font-light leading-relaxed text-slate-600">Send your site. We'll show you what to fix first.</p>
+      </div>
+      <div class="lg:col-span-7 rounded-2xl border border-slate-200 bg-[#f7f8fa] p-6 shadow-sm md:p-8">
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="rounded-2xl bg-white p-5">
+            <i data-lucide="mouse-pointer-click" class="mb-4 h-5 w-5 text-[#0b1220]"></i>
+            <p class="text-sm font-medium text-[#0b1220]">Quick questions</p>
+          </div>
+          <div class="rounded-2xl bg-white p-5">
+            <i data-lucide="send" class="mb-4 h-5 w-5 text-[#0b1220]"></i>
+            <p class="text-sm font-medium text-[#0b1220]">No long brief</p>
+          </div>
+          <div class="rounded-2xl bg-white p-5">
+            <i data-lucide="search-check" class="mb-4 h-5 w-5 text-[#0b1220]"></i>
+            <p class="text-sm font-medium text-[#0b1220]">Clear next step</p>
+          </div>
+        </div>
+        <button type="button" class="js-free-review-trigger brand-pill-button brand-pill-button-primary mt-8">Start Website Review <span class="brand-pill-icon" aria-hidden="true"><i data-lucide="arrow-right"></i></span></button>
       </div>
     </div>
   </section>
 
-  <section class="reveal py-24 px-6 bg-white">
-    <div class="max-w-7xl mx-auto">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        <div class="lg:col-span-5 order-2 lg:order-1">
-          <div class="relative rounded-2xl overflow-hidden aspect-[3/4] shadow-xl">
-            <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/1e8801da-5a4a-475b-961d-0dbc4903d632_3840w.jpg" alt="Rahim Huda working on laptop" class="image-reveal w-full h-full object-cover bg-center absolute inset-0">
-            <div class="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md p-4 rounded-xl">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center"><i data-lucide="play" class="w-4 h-4 text-white fill-current ml-1"></i></div>
-                <div><div class="text-xs font-semibold">Rahim Huda</div><div class="text-[10px] text-slate-500">Certified Squarespace Circle Expert</div></div>
-              </div>
-            </div>
+  <footer class="border-t border-slate-200 bg-white px-6 py-12">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 gap-10 md:grid-cols-12">
+      <div class="md:col-span-5">
+        <a href="index.html" class="mb-4 flex items-center gap-2" aria-label="SQSP Agency logo">
+          <div class="flex h-9 w-9 items-center justify-center rounded-full bg-[#0b1220] text-white">
+            <i data-lucide="layers" class="h-5 w-5 stroke-[1.5]"></i>
           </div>
+          <span class="text-sm font-semibold tracking-tight">SQSP Agency</span>
+        </a>
+        <p class="max-w-sm text-sm font-light leading-relaxed text-slate-500">Squarespace design, redesign, SEO and practical support for business owners who want their website to feel sharper.</p>
+        <div class="mt-6 flex gap-3">
+          <a href="#" aria-label="Instagram" class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition-colors hover:border-[#0b1220] hover:text-[#0b1220]"><i data-lucide="instagram" class="h-4 w-4"></i></a>
+          <a href="#" aria-label="LinkedIn" class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition-colors hover:border-[#0b1220] hover:text-[#0b1220]"><i data-lucide="linkedin" class="h-4 w-4"></i></a>
+          <a href="#" aria-label="YouTube" class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition-colors hover:border-[#0b1220] hover:text-[#0b1220]"><i data-lucide="youtube" class="h-4 w-4"></i></a>
         </div>
-        <div class="lg:col-span-7 order-1 lg:order-2">
-          <span class="text-xs font-medium uppercase tracking-widest text-slate-500 mb-2 block">Trusted, Independent Professional</span>
-          <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-slate-900 mb-6">Hi, I'm Rahim Huda.</h2>
-          <p class="text-lg text-slate-600 font-light mb-6 leading-relaxed">A Certified Squarespace Circle Expert and Certified Digital Marketing Professional with over a decade of experience designing high-performing websites for service-based professionals.</p>
-          <p class="text-lg text-slate-600 font-light mb-8 leading-relaxed">No outsourcing. No middlemen. When you work with me, you're working directly with the person who will design, build, and optimize your site from start to finish.</p>
-          <div class="flex flex-wrap gap-4">
-            <div class="flex items-center gap-2 px-4 py-2 bg-slate-50 rounded-lg border border-slate-100"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue-600"></i><span class="text-sm font-medium text-slate-700">Google Ads Certified</span></div>
-            <div class="flex items-center gap-2 px-4 py-2 bg-slate-50 rounded-lg border border-slate-100"><i data-lucide="check-circle-2" class="w-4 h-4 text-slate-900"></i><span class="text-sm font-medium text-slate-700">Squarespace Circle Member</span></div>
-          </div>
+      </div>
+      <div class="md:col-span-3">
+        <h3 class="mb-4 text-sm font-semibold text-[#0b1220]">Services</h3>
+        <div class="grid gap-3 text-sm text-slate-500">
+          <a href="design.html" class="hover:text-[#0b1220]">Design</a>
+          <a href="redesign.html" class="hover:text-[#0b1220]">Redesign</a>
+          <a href="seo.html" class="hover:text-[#0b1220]">SEO</a>
+        </div>
+      </div>
+      <div class="md:col-span-3">
+        <h3 class="mb-4 text-sm font-semibold text-[#0b1220]">Company</h3>
+        <div class="grid gap-3 text-sm text-slate-500">
+          <a href="#services" class="hover:text-[#0b1220]">Work</a>
+          <a href="#pricing" class="hover:text-[#0b1220]">Pricing</a>
+          <a href="contact.html" class="hover:text-[#0b1220]">Contact</a>
         </div>
       </div>
     </div>
-  </section>
-
-  <section class="reveal py-24 px-6 bg-white border-t border-slate-100">
-    <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-14">
-        <span class="text-xs font-medium uppercase tracking-[0.28em] text-slate-500 mb-4 block">FAQ</span>
-        <h2 class="text-4xl md:text-6xl font-medium tracking-tight text-slate-950 mb-5">Common questions</h2>
-        <p class="text-lg text-slate-600 font-light">Quick answers before you start your Squarespace project.</p>
-      </div>
-
-      <div class="space-y-4">
-        <div class="faq-item">
-          <button type="button" class="faq-question" aria-expanded="false">
-            <span class="text-lg md:text-xl font-semibold">What does SQSP Agency help with?</span>
-            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 stroke-[2]"></i>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">We help service-based businesses design, redesign, and market Squarespace websites. That can include page strategy, visual design, copy direction, SEO foundations, Google Ads, and conversion-focused enquiry flows.</div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button type="button" class="faq-question" aria-expanded="false">
-            <span class="text-lg md:text-xl font-semibold">Can you improve my existing Squarespace website?</span>
-            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 stroke-[2]"></i>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">Yes. If your current site feels dated, unclear, slow, or is not generating enough enquiries, we can restructure the pages, sharpen the messaging, improve the design, and make the next step easier for visitors.</div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button type="button" class="faq-question" aria-expanded="false">
-            <span class="text-lg md:text-xl font-semibold">Do you only work with Squarespace?</span>
-            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 stroke-[2]"></i>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">Squarespace is the main focus because it is clean, flexible, and easy for business owners to manage after launch. The marketing strategy around the site can also include Google Ads, SEO, email, and social content.</div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button type="button" class="faq-question" aria-expanded="false">
-            <span class="text-lg md:text-xl font-semibold">How long does a website project take?</span>
-            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 stroke-[2]"></i>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">Timelines depend on the number of pages, content readiness, and whether you need design only or marketing support as well. After you send an enquiry, we can recommend a realistic timeline based on your goals.</div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button type="button" class="faq-question" aria-expanded="false">
-            <span class="text-lg md:text-xl font-semibold">Can you help with Google Ads and SEO after launch?</span>
-            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 stroke-[2]"></i>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">Yes. The site can be built with SEO basics in place, and we can also support Google Ads campaigns, conversion tracking, landing page improvements, and ongoing marketing so your website has a clearer path to leads.</div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button type="button" class="faq-question" aria-expanded="false">
-            <span class="text-lg md:text-xl font-semibold">What happens after I submit the form?</span>
-            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 stroke-[2]"></i>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">Your enquiry is reviewed and we look at what you need: a new site, a redesign, templates, or marketing support. Then we come back with the best next step rather than forcing you into a one-size-fits-all package.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" class="reveal py-24 px-6 bg-slate-50 border-t border-slate-100 text-center">
-    <div class="max-w-3xl mx-auto">
-      <span class="text-sm font-semibold tracking-tight text-slate-900 mb-4 block">Launch. Grow. Scale.</span>
-      <h2 class="text-4xl md:text-6xl font-medium tracking-tight text-slate-900 mb-6">Ready to Get Started?</h2>
-      <p class="text-lg text-slate-600 font-light mb-10">Your Squarespace website should work as hard as you do. Whether you need a custom design, a high-converting template, or a marketing strategy that drives results, we're here to help. Let's build something powerful together.</p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="https://sqsp-estimate-quiz.netlify.app" class="px-8 py-4 bg-slate-900 text-white rounded-full font-medium text-base hover:bg-slate-800 transition-colors shadow-lg">Get Instant Estimate</a>
-        <button type="button" class="js-fillout-trigger px-8 py-4 bg-white text-slate-900 border border-slate-200 rounded-full font-medium text-base hover:bg-slate-50 transition-colors">Book a Project Call</button>
-      </div>
-    </div>
-  </section>
-
-  <footer class="py-12 px-6 border-t border-slate-200 bg-white">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
-      <div class="mb-4 md:mb-0">© 2025 SQSP Agency. All rights reserved.</div>
-      <div class="flex gap-6"><a href="privacy.html" class="hover:text-slate-900">Privacy</a><a href="terms.html" class="hover:text-slate-900">Terms</a><a href="https://form.fillout.com/t/bLBrXspQatus" class="js-fillout-trigger hover:text-slate-900">Contact</a></div>
+    <div class="mx-auto mt-10 flex max-w-7xl flex-col justify-between gap-4 border-t border-slate-200 pt-6 text-sm text-slate-500 md:flex-row">
+      <p>© 2026 SQSP Agency. All rights reserved.</p>
+      <p>Design · Redesign · SEO · Support</p>
     </div>
   </footer>
 
-  <div class="fillout-fullscreen-root" id="fillout-fullscreen" aria-hidden="true">
-    <div class="fillout-fullscreen-panel">
-      <button type="button" class="fillout-close" aria-label="Close form"><i data-lucide="x" class="w-5 h-5"></i></button>
-      <div data-fillout-id="bLBrXspQatus" data-fillout-embed-type="fullscreen" style="width:100%;height:100%;" data-fillout-inherit-parameters></div>
+  <div class="review-form-root free-review-root" id="free-website-review-form" aria-hidden="true">
+    <button type="button" class="review-close free-review-close" aria-label="Close free website review form"><i data-lucide="x" class="h-5 w-5"></i></button>
+    <div class="review-form-panel">
+      <div class="review-form-shell">
+        <div class="review-form-top">
+          <button type="button" class="review-top-back free-review-close">Close</button>
+          <div class="review-progress-track">
+            <div class="review-progress-bar" style="width: 100%;"></div>
+          </div>
+          <span class="review-progress-label text-xs font-medium text-slate-500">Free audit</span>
+        </div>
+
+        <form class="review-form free-review-form" name="sqsp-free-review" method="POST" action="/__forms.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <input type="hidden" name="form-name" value="sqsp-free-review">
+          <p hidden>
+            <label>Don't fill this out: <input name="bot-field"></label>
+          </p>
+
+          <section class="review-step is-active" data-step="free-review-details">
+            <p class="review-kicker">Free Website Review</p>
+            <h2 class="review-title">Send your site for a quick audit.</h2>
+            <p class="review-helper">No long brief. Add your details and we'll tell you what to fix first.</p>
+            <div class="review-field-wrap grid gap-4">
+              <label>
+                <span class="sr-only">Name</span>
+                <input class="review-input" name="name" type="text" placeholder="Your name" autocomplete="name" required>
+              </label>
+              <label>
+                <span class="sr-only">Email</span>
+                <input class="review-input" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+              </label>
+              <label>
+                <span class="sr-only">Website URL</span>
+                <input class="review-input" name="website_url" type="text" placeholder="https://yourwebsite.com" inputmode="url" autocomplete="url" required>
+              </label>
+            </div>
+            <p class="review-error free-review-status" aria-live="polite"></p>
+            <div class="review-actions">
+              <button type="button" class="review-back free-review-close">Close</button>
+              <button type="submit" class="review-submit">Send My Site <span class="review-forward-icon" aria-hidden="true">→</span></button>
+            </div>
+          </section>
+
+          <section class="review-step" data-step="free-review-thanks">
+            <p class="review-kicker">Submitted</p>
+            <h2 class="review-title">Thanks - we've got your website.</h2>
+            <p class="review-helper">We'll review it and come back with the clearest first fixes.</p>
+            <div class="review-actions">
+              <span></span>
+              <button type="button" class="review-next free-review-close">Back to website</button>
+            </div>
+          </section>
+        </form>
+      </div>
     </div>
   </div>
-  <script src="https://server.fillout.com/embed/v1/"></script>
+
+  <div class="review-form-root" id="website-review-form" aria-hidden="true">
+    <button type="button" class="review-close" aria-label="Close website review form"><i data-lucide="x" class="h-5 w-5"></i></button>
+    <div class="review-form-panel">
+      <div class="review-form-shell">
+        <div class="review-form-top">
+          <button type="button" class="review-top-back">Back</button>
+          <div class="review-progress-track">
+            <div class="review-progress-bar"></div>
+          </div>
+          <span class="review-progress-label text-xs font-medium text-slate-500">0%</span>
+        </div>
+
+        <form class="review-form" name="sqsp-website-review" method="POST" action="/__forms.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <input type="hidden" name="form-name" value="sqsp-website-review">
+          <p hidden>
+            <label>Don't fill this out: <input name="bot-field"></label>
+          </p>
+          <input type="hidden" name="service_need">
+          <input type="hidden" name="has_website">
+          <input type="hidden" name="main_issue">
+          <input type="hidden" name="timeline">
+          <input type="hidden" name="budget">
+          <input type="hidden" name="enquiry_source" value="Website help quiz">
+
+          <section class="review-step is-active" data-step="welcome">
+            <p class="review-kicker">SQSP Agency</p>
+            <h2 class="review-title">Need Squarespace help?</h2>
+            <p class="review-helper">Answer a few quick questions and we'll point you to the right next step.</p>
+            <div class="review-actions">
+              <span></span>
+              <button type="button" class="review-next" data-start>Start Website Review <span class="review-forward-icon" aria-hidden="true">→</span></button>
+            </div>
+          </section>
+
+          <section class="review-step" data-step="choice" data-field="service_need" data-required="true">
+            <p class="review-kicker">Question 1</p>
+            <h2 class="review-question">What do you need help with?</h2>
+            <div class="review-options" role="radiogroup" aria-label="What do you need help with?">
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="New website">New website<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="Redesign">Redesign<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="Finish my site">Finish my site<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="SEO help">SEO help<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="Template help">Template help<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="Quick fix">Quick fix<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="Not sure">Not sure<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+            </div>
+            <p class="review-error" aria-live="polite"></p>
+          </section>
+
+          <section class="review-step" data-step="choice" data-field="has_website" data-required="true">
+            <p class="review-kicker">Question 2</p>
+            <h2 class="review-question">Do you already have a Squarespace website?</h2>
+            <div class="review-options" role="radiogroup" aria-label="Do you already have a Squarespace website?">
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="Yes">Yes<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="No">No<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="I have started one">I have started one<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="Not sure">Not sure<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+            </div>
+            <p class="review-error" aria-live="polite"></p>
+          </section>
+
+          <section class="review-step" data-step="choice" data-field="main_issue" data-required="true" data-multiple="true">
+            <p class="review-kicker">Question 3</p>
+            <h2 class="review-question">What feels wrong right now?</h2>
+            <p class="review-helper">Select as many as apply.</p>
+            <div class="review-options" role="group" aria-label="What feels wrong right now? Select as many as apply.">
+              <button type="button" class="review-choice" role="checkbox" aria-checked="false" data-value="Looks DIY">Looks DIY<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="checkbox" aria-checked="false" data-value="Not finished">Not finished<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="checkbox" aria-checked="false" data-value="Mobile looks bad">Mobile looks bad<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="checkbox" aria-checked="false" data-value="Not getting leads">Not getting leads<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="checkbox" aria-checked="false" data-value="SEO is weak">SEO is weak<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="checkbox" aria-checked="false" data-value="Hard to manage">Hard to manage<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="checkbox" aria-checked="false" data-value="Just need expert help">Just need expert help<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+            </div>
+            <p class="review-error" aria-live="polite"></p>
+            <div class="review-actions">
+              <button type="button" class="review-back">Back</button>
+              <button type="button" class="review-next">Continue <span class="review-forward-icon" aria-hidden="true">→</span></button>
+            </div>
+          </section>
+
+          <section class="review-step" data-step="choice" data-field="timeline" data-required="true">
+            <p class="review-kicker">Question 4</p>
+            <h2 class="review-question">When would you like help?</h2>
+            <div class="review-options" role="radiogroup" aria-label="When would you like help?">
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="ASAP">ASAP<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="This week">This week<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="This month">This month<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="Next 2-3 months">Next 2-3 months<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="Just researching">Just researching<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+            </div>
+            <p class="review-error" aria-live="polite"></p>
+          </section>
+
+          <section class="review-step" data-step="choice" data-field="budget" data-required="true">
+            <p class="review-kicker">Question 5</p>
+            <h2 class="review-question">What budget feels realistic?</h2>
+            <div class="review-options" role="radiogroup" aria-label="What budget feels realistic?">
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="Under £500">Under £500<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="£500-£1,000">£500-£1,000<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="£1,000-£2,000">£1,000-£2,000<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="£2,000+">£2,000+<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+              <button type="button" class="review-choice" role="radio" aria-checked="false" data-value="Not sure yet">Not sure yet<span class="review-choice-icon"><i data-lucide="check" class="h-3.5 w-3.5"></i></span></button>
+            </div>
+            <p class="review-error" aria-live="polite"></p>
+          </section>
+
+          <section class="review-step" data-step="input" data-field="website_url">
+            <p class="review-kicker">Question 6</p>
+            <h2 class="review-question">What's your website link?</h2>
+            <p class="review-helper">No site yet? You can leave this blank.</p>
+            <div class="review-field-wrap">
+              <label class="sr-only" for="review-website-url">Website URL</label>
+              <input id="review-website-url" class="review-input" name="website_url" type="text" placeholder="https://yourwebsite.com" inputmode="url" autocomplete="url">
+            </div>
+            <p class="review-error" aria-live="polite"></p>
+            <div class="review-actions">
+              <button type="button" class="review-back">Back</button>
+              <button type="button" class="review-next">Continue <span class="review-forward-icon" aria-hidden="true">→</span></button>
+            </div>
+          </section>
+
+          <section class="review-step" data-step="input" data-field="name" data-required="true">
+            <p class="review-kicker">Question 7</p>
+            <h2 class="review-question">What's your name?</h2>
+            <div class="review-field-wrap">
+              <label class="sr-only" for="review-name">Name</label>
+              <input id="review-name" class="review-input" name="name" type="text" autocomplete="name" required>
+            </div>
+            <p class="review-error" aria-live="polite"></p>
+            <div class="review-actions">
+              <button type="button" class="review-back">Back</button>
+              <button type="button" class="review-next">Continue <span class="review-forward-icon" aria-hidden="true">→</span></button>
+            </div>
+          </section>
+
+          <section class="review-step" data-step="input" data-field="email" data-required="true" data-email="true">
+            <p class="review-kicker">Question 8</p>
+            <h2 class="review-question">What's your email address?</h2>
+            <div class="review-field-wrap">
+              <label class="sr-only" for="review-email">Email</label>
+              <input id="review-email" class="review-input" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+            </div>
+            <p class="review-error" aria-live="polite"></p>
+            <div class="review-actions">
+              <button type="button" class="review-back">Back</button>
+              <button type="button" class="review-next">Continue <span class="review-forward-icon" aria-hidden="true">→</span></button>
+            </div>
+          </section>
+
+          <section class="review-step" data-step="input" data-field="message">
+            <p class="review-kicker">Question 9</p>
+            <h2 class="review-question">Anything else we should know?</h2>
+            <p class="review-helper">Optional. Add a short note if there is anything specific you want us to review.</p>
+            <div class="review-field-wrap">
+              <label class="sr-only" for="review-message">Message</label>
+              <textarea id="review-message" class="review-input" name="message" placeholder="Example: The mobile layout looks messy and I'm not getting enquiries."></textarea>
+            </div>
+            <p class="review-error" aria-live="polite"></p>
+            <div class="review-actions">
+              <button type="button" class="review-back">Back</button>
+              <button type="submit" class="review-submit">Send My Website <span class="review-forward-icon" aria-hidden="true">→</span></button>
+            </div>
+            <p class="review-status" aria-live="polite"></p>
+          </section>
+
+          <section class="review-step" data-step="thanks">
+            <p class="review-kicker">Submitted</p>
+            <h2 class="review-title">Thanks - we've got your details.</h2>
+            <p class="review-helper">We'll review what you sent and recommend the clearest next step for your Squarespace website.</p>
+            <div class="review-actions">
+              <span></span>
+              <a href="https://www.sqspagency.com" class="review-next inline-flex items-center justify-center">Visit SQSP Agency</a>
+            </div>
+          </section>
+        </form>
+      </div>
+    </div>
+  </div>
   <script>
     lucide.createIcons();
 
-    const filloutFormUrl = "https://form.fillout.com/t/bLBrXspQatus";
-    const filloutRoot = document.querySelector(".fillout-fullscreen-root");
-    const filloutClose = document.querySelector(".fillout-close");
+    const reviewRoot = document.querySelector("#website-review-form");
+    const reviewForm = reviewRoot?.querySelector(".review-form");
+    const reviewSteps = reviewRoot ? Array.from(reviewRoot.querySelectorAll(".review-step")) : [];
+    const reviewProgressBar = reviewRoot?.querySelector(".review-progress-bar");
+    const reviewProgressLabel = reviewRoot?.querySelector(".review-progress-label");
+    const reviewClose = reviewRoot?.querySelector(".review-close");
+    const reviewTopBack = reviewRoot?.querySelector(".review-top-back");
+    let reviewStepIndex = 0;
+    const reviewAnswers = {};
 
-    function openFilloutForm(event) {
-      event.preventDefault();
+    function showReviewStep(index) {
+      reviewStepIndex = Math.max(0, Math.min(index, reviewSteps.length - 1));
+      reviewSteps.forEach((step, stepIndex) => {
+        step.classList.toggle("is-active", stepIndex === reviewStepIndex);
+      });
 
-      if (filloutRoot) {
-        filloutRoot.classList.add("is-open");
-        filloutRoot.setAttribute("aria-hidden", "false");
-        document.body.classList.add("form-open");
-        return;
-      }
+      const questionCount = reviewSteps.length - 2;
+      const progress = reviewStepIndex === 0 ? 0 : reviewStepIndex >= reviewSteps.length - 1 ? 100 : Math.round((reviewStepIndex / questionCount) * 100);
+      if (reviewProgressBar) reviewProgressBar.style.width = `${progress}%`;
+      if (reviewProgressLabel) reviewProgressLabel.textContent = `${progress}%`;
+      if (reviewTopBack) reviewTopBack.disabled = reviewStepIndex === 0 || reviewStepIndex >= reviewSteps.length - 1;
 
-      window.open(filloutFormUrl, "_blank", "noopener,noreferrer");
+      const activeInput = reviewSteps[reviewStepIndex].querySelector(".review-input");
+      if (activeInput) window.setTimeout(() => activeInput.focus(), 120);
     }
 
-    function closeFilloutForm() {
-      if (!filloutRoot) return;
-      filloutRoot.classList.remove("is-open");
-      filloutRoot.setAttribute("aria-hidden", "true");
+    function openReviewForm(event) {
+      event.preventDefault();
+      if (!reviewRoot) return;
+      reviewRoot.classList.add("is-open");
+      reviewRoot.setAttribute("aria-hidden", "false");
+      document.body.classList.add("form-open");
+      showReviewStep(0);
+    }
+
+    function setForwardButtonLabel(button, label) {
+      if (!button) return;
+      button.innerHTML = `${label} <span class="review-forward-icon" aria-hidden="true">→</span>`;
+    }
+
+    const freeReviewRoot = document.querySelector(".free-review-root");
+    const freeReviewForm = freeReviewRoot?.querySelector(".free-review-form");
+    const freeReviewSteps = freeReviewRoot ? Array.from(freeReviewRoot.querySelectorAll(".review-step")) : [];
+    const freeReviewStatus = freeReviewRoot?.querySelector(".free-review-status");
+
+    function showFreeReviewStep(index) {
+      freeReviewSteps.forEach((step, stepIndex) => {
+        step.classList.toggle("is-active", stepIndex === index);
+      });
+    }
+
+    function openFreeReviewForm(event) {
+      event.preventDefault();
+      if (!freeReviewRoot) return;
+      freeReviewRoot.classList.add("is-open");
+      freeReviewRoot.setAttribute("aria-hidden", "false");
+      document.body.classList.add("form-open");
+      showFreeReviewStep(0);
+      window.setTimeout(() => freeReviewForm?.querySelector(".review-input")?.focus(), 120);
+    }
+
+    function closeFreeReviewForm() {
+      if (!freeReviewRoot) return;
+      freeReviewRoot.classList.remove("is-open");
+      freeReviewRoot.setAttribute("aria-hidden", "true");
       document.body.classList.remove("form-open");
     }
 
-    filloutClose?.addEventListener("click", closeFilloutForm);
+    function closeReviewForm() {
+      if (!reviewRoot) return;
+      reviewRoot.classList.remove("is-open");
+      reviewRoot.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("form-open");
+    }
+
+    function setStepError(step, message) {
+      const error = step.querySelector(".review-error");
+      if (error) error.textContent = message || "";
+    }
+
+    function validateReviewStep(step) {
+      const field = step.dataset.field;
+      const isRequired = step.dataset.required === "true";
+      const isEmail = step.dataset.email === "true";
+
+      if (!field) return true;
+
+      const input = step.querySelector(`[name="${field}"]`);
+      const value = input ? input.value.trim() : reviewAnswers[field];
+
+      if (isRequired && (Array.isArray(value) ? value.length === 0 : !value)) {
+        setStepError(step, "Please answer this before continuing.");
+        return false;
+      }
+
+      if (isEmail && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        setStepError(step, "Please enter a valid email address.");
+        return false;
+      }
+
+      setStepError(step, "");
+      return true;
+    }
+
+    function goToNextReviewStep() {
+      const currentStep = reviewSteps[reviewStepIndex];
+      if (!validateReviewStep(currentStep)) return;
+      showReviewStep(reviewStepIndex + 1);
+    }
+
+    function syncHiddenField(field, value) {
+      const hidden = reviewForm?.querySelector(`input[type="hidden"][name="${field}"]`);
+      if (hidden) hidden.value = value;
+    }
+
+    reviewClose?.addEventListener("click", closeReviewForm);
+    reviewTopBack?.addEventListener("click", () => showReviewStep(reviewStepIndex - 1));
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeFilloutForm();
+      if (event.key === "Escape") {
+        closeReviewForm();
+        closeFreeReviewForm();
+      }
     });
 
-    document.querySelectorAll(".js-fillout-trigger").forEach((trigger) => {
-      trigger.addEventListener("click", openFilloutForm);
+    document.querySelectorAll(".js-review-trigger").forEach((trigger) => {
+      trigger.addEventListener("click", openReviewForm);
     });
 
-    document.querySelectorAll(".faq-item").forEach((item) => {
-      const question = item.querySelector(".faq-question");
-      const answer = item.querySelector(".faq-answer");
+    document.querySelectorAll(".js-free-review-trigger").forEach((trigger) => {
+      trigger.addEventListener("click", openFreeReviewForm);
+    });
 
-      question?.addEventListener("click", () => {
-        const isOpen = item.classList.contains("is-open");
+    freeReviewRoot?.querySelectorAll(".free-review-close").forEach((button) => {
+      button.addEventListener("click", closeFreeReviewForm);
+    });
 
-        item.classList.toggle("is-open", !isOpen);
-        question.setAttribute("aria-expanded", String(!isOpen));
+    freeReviewForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const submitButton = freeReviewForm.querySelector(".review-submit");
+      const email = freeReviewForm.querySelector('input[name="email"]');
 
-        if (!answer) return;
-        answer.style.maxHeight = isOpen ? "0px" : `${answer.scrollHeight}px`;
+      if (!freeReviewForm.checkValidity()) {
+        if (freeReviewStatus) freeReviewStatus.textContent = "Please add your name, email and website link.";
+        freeReviewForm.reportValidity();
+        return;
+      }
+
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+        if (freeReviewStatus) freeReviewStatus.textContent = "Please enter a valid email address.";
+        email.focus();
+        return;
+      }
+
+      if (submitButton) {
+        submitButton.textContent = "Sending...";
+        submitButton.disabled = true;
+      }
+      if (freeReviewStatus) freeReviewStatus.textContent = "";
+
+      try {
+        const formData = new FormData(freeReviewForm);
+        const response = await fetch("/__forms.html", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(formData).toString()
+        });
+
+        if (!response.ok) throw new Error("Submission failed");
+        freeReviewForm.reset();
+        showFreeReviewStep(1);
+      } catch (error) {
+        if (freeReviewStatus) freeReviewStatus.textContent = "Something went wrong. Please try again.";
+      } finally {
+        if (submitButton) {
+          setForwardButtonLabel(submitButton, "Send My Site");
+          submitButton.disabled = false;
+        }
+      }
+    });
+
+    reviewForm?.querySelector("[data-start]")?.addEventListener("click", () => showReviewStep(1));
+
+    reviewForm?.querySelectorAll(".review-choice").forEach((choice) => {
+      choice.addEventListener("click", () => {
+        const step = choice.closest(".review-step");
+        const field = step?.dataset.field;
+        const value = choice.dataset.value || "";
+        const isMultiple = step?.dataset.multiple === "true";
+        if (!step || !field) return;
+
+        if (isMultiple) {
+          const selected = new Set(Array.isArray(reviewAnswers[field]) ? reviewAnswers[field] : []);
+          if (selected.has(value)) {
+            selected.delete(value);
+          } else {
+            selected.add(value);
+          }
+          reviewAnswers[field] = Array.from(selected);
+          syncHiddenField(field, reviewAnswers[field].join(", "));
+          choice.classList.toggle("is-selected", selected.has(value));
+          choice.setAttribute("aria-checked", String(selected.has(value)));
+        } else {
+          reviewAnswers[field] = value;
+          syncHiddenField(field, value);
+          step.querySelectorAll(".review-choice").forEach((item) => {
+            const isSelected = item === choice;
+            item.classList.toggle("is-selected", isSelected);
+            item.setAttribute("aria-checked", String(isSelected));
+          });
+        }
+        setStepError(step, "");
+        if (!isMultiple) window.setTimeout(() => showReviewStep(reviewStepIndex + 1), 250);
       });
+    });
+
+    reviewForm?.querySelectorAll(".review-back").forEach((button) => {
+      button.addEventListener("click", () => showReviewStep(reviewStepIndex - 1));
+    });
+
+    reviewForm?.querySelectorAll(".review-next:not([data-start])").forEach((button) => {
+      button.addEventListener("click", goToNextReviewStep);
+    });
+
+    reviewForm?.querySelectorAll(".review-input").forEach((input) => {
+      input.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" || input.tagName === "TEXTAREA") return;
+        event.preventDefault();
+        goToNextReviewStep();
+      });
+    });
+
+    reviewForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const currentStep = reviewSteps[reviewStepIndex];
+      if (!validateReviewStep(currentStep)) return;
+
+      const submitButton = reviewForm.querySelector(".review-submit");
+      const status = reviewForm.querySelector(".review-status");
+      if (submitButton) {
+        submitButton.textContent = "Sending...";
+        submitButton.disabled = true;
+      }
+      if (status) status.textContent = "";
+
+      try {
+        const formData = new FormData(reviewForm);
+        const body = new URLSearchParams(formData).toString();
+
+        const response = await fetch("/__forms.html", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body
+        });
+
+        if (!response.ok) throw new Error("Submission failed");
+        showReviewStep(reviewSteps.length - 1);
+      } catch (error) {
+        if (status) status.textContent = "Something went wrong. Please try again.";
+      } finally {
+        if (submitButton) {
+          setForwardButtonLabel(submitButton, "Send My Website");
+          submitButton.disabled = false;
+        }
+      }
     });
 
     const menuToggle = document.querySelector(".menu-toggle");
@@ -721,6 +1587,15 @@
         document.querySelector(".menu-icon-open")?.classList.toggle("hidden", !isOpen);
         document.querySelector(".menu-icon-close")?.classList.toggle("hidden", isOpen);
       });
+
+      mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.remove("is-open");
+          menuToggle.setAttribute("aria-expanded", "false");
+          document.querySelector(".menu-icon-open")?.classList.remove("hidden");
+          document.querySelector(".menu-icon-close")?.classList.add("hidden");
+        });
+      });
     }
 
     document.body.classList.add("page-ready");
@@ -730,12 +1605,6 @@
         const href = link.getAttribute("href");
         if (!href || link.target || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
         event.preventDefault();
-        if (mobileMenu) {
-          mobileMenu.classList.remove("is-open");
-          menuToggle?.setAttribute("aria-expanded", "false");
-          document.querySelector(".menu-icon-open")?.classList.remove("hidden");
-          document.querySelector(".menu-icon-close")?.classList.add("hidden");
-        }
         document.body.classList.add("page-leaving");
         window.setTimeout(() => { window.location.href = href; }, 260);
       });
