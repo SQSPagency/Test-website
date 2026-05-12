@@ -235,7 +235,7 @@
       transition-delay: 0s;
     }
     .review-form-panel {
-      min-height: 100dvh;
+      height: 100dvh;
       width: 100%;
       max-width: 100%;
       overflow-y: auto;
@@ -511,22 +511,18 @@
       transform: translate(2px, -2px) rotate(-35deg);
     }
     .review-step[data-multiple="true"].is-active {
-      padding-bottom: 108px;
+      padding-bottom: 16px;
     }
     .review-step[data-multiple="true"] .review-question {
       font-size: clamp(2rem, 5.8vw, 3.75rem);
     }
     .review-step[data-multiple="true"] .review-actions {
-      position: fixed;
-      left: 24px;
-      right: 24px;
-      bottom: 18px;
-      left: max(24px, calc((100vw - 760px) / 2));
-      right: max(24px, calc((100vw - 760px) / 2));
-      bottom: max(18px, env(safe-area-inset-bottom));
+      position: sticky;
+      bottom: max(14px, env(safe-area-inset-bottom));
       z-index: 10002;
-      margin: 0 auto;
-      max-width: 760px;
+      margin: clamp(18px, 4vh, 34px) auto 0;
+      width: 100%;
+      max-width: 100%;
       padding: 10px;
       border: 1px solid rgba(15, 23, 42, 0.08);
       border-radius: 999px;
@@ -652,15 +648,13 @@
         margin-top: 16px;
       }
       .review-step[data-multiple="true"] .review-actions {
-        left: 16px;
-        right: 16px;
         bottom: 12px;
         bottom: max(12px, env(safe-area-inset-bottom));
-        max-width: 728px;
+        max-width: 100%;
         padding: 8px;
       }
       .review-step[data-multiple="true"].is-active {
-        padding-bottom: 88px;
+        padding-bottom: 10px;
       }
       .review-step[data-multiple="true"] .review-question {
         font-size: clamp(1.65rem, 8vw, 2.18rem);
@@ -703,16 +697,44 @@
         padding: 10px 12px;
       }
       .review-step[data-multiple="true"] .review-actions {
-        left: 10px;
-        right: 10px;
         bottom: 10px;
         padding: 7px;
       }
       .review-step[data-multiple="true"].is-active {
-        padding-bottom: 82px;
+        padding-bottom: 8px;
       }
       .review-step[data-multiple="true"] .review-choice {
         min-height: 40px;
+      }
+    }
+    @media (max-height: 760px) and (min-width: 641px) {
+      .review-form-shell {
+        padding-top: 18px;
+        padding-bottom: 18px;
+      }
+      .review-form-top {
+        margin-bottom: 18px;
+      }
+      .review-form {
+        justify-content: flex-start;
+      }
+      .review-step[data-multiple="true"] .review-question {
+        font-size: clamp(2rem, 5vw, 3.1rem);
+      }
+      .review-step[data-multiple="true"] .review-helper {
+        margin-top: 10px;
+      }
+      .review-step[data-multiple="true"] .review-options {
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .review-step[data-multiple="true"] .review-choice {
+        min-height: 46px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+      .review-step[data-multiple="true"] .review-actions {
+        margin-top: 16px;
       }
     }
     @media (prefers-reduced-motion: reduce) {
