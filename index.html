@@ -1149,7 +1149,7 @@
           <span class="review-progress-label text-xs font-medium text-slate-500">Free audit</span>
         </div>
 
-        <form class="review-form free-review-form" name="Free Website Review" method="POST" action="/__forms.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <form class="review-form free-review-form" name="Free Website Review" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
           <input type="hidden" name="form-name" value="Free Website Review">
           <p hidden>
             <label>Don't fill this out: <input name="bot-field"></label>
@@ -1206,7 +1206,7 @@
           <span class="review-progress-label text-xs font-medium text-slate-500">0%</span>
         </div>
 
-        <form class="review-form" name="Project Enquiry" method="POST" action="/__forms.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <form class="review-form" name="Project Enquiry" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
           <input type="hidden" name="form-name" value="Project Enquiry">
           <p hidden>
             <label>Don't fill this out: <input name="bot-field"></label>
@@ -1576,8 +1576,7 @@
         });
 
         if (!response.ok) throw new Error("Submission failed");
-        freeReviewForm.reset();
-        showFreeReviewStep(1);
+        window.location.href = "/thank-you.html?form=free-review";
       } catch (error) {
         if (freeReviewStatus) freeReviewStatus.textContent = "Something went wrong. Please try again.";
       } finally {
@@ -1663,7 +1662,7 @@
         });
 
         if (!response.ok) throw new Error("Submission failed");
-        showReviewStep(reviewSteps.length - 1);
+        window.location.href = "/thank-you.html?form=project-enquiry";
       } catch (error) {
         if (status) status.textContent = "Something went wrong. Please try again.";
       } finally {

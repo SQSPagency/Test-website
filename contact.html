@@ -220,7 +220,7 @@
         </div>
 
         <div class="reveal lg:col-span-7">
-          <form class="contact-card grid gap-5 p-6 md:p-8" name="Project Enquiry" method="POST" action="/__forms.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <form class="contact-card grid gap-5 p-6 md:p-8" name="Project Enquiry" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
             <input type="hidden" name="form-name" value="Project Enquiry">
             <input type="hidden" name="enquiry_source" value="Contact page">
             <input type="hidden" name="has_website" value="">
@@ -366,8 +366,7 @@
         });
 
         if (!response.ok) throw new Error("Submission failed");
-        contactForm.style.display = "none";
-        contactSuccess.classList.add("is-visible");
+        window.location.href = "/thank-you.html?form=contact";
       } catch (error) {
         contactStatus.textContent = "Something went wrong. Please try again.";
       } finally {
