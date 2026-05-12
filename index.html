@@ -827,7 +827,7 @@
         <img src="assets/hero-desktop.webp" alt="Squarespace website design and support by SQSP Agency" width="1600" height="1067" loading="eager" fetchpriority="high" decoding="async">
       </picture>
       <video class="hero-video" autoplay muted loop playsinline preload="none" poster="assets/hero-desktop.webp" aria-label="Clean Squarespace website shown on laptop and mobile">
-        <source data-desktop-src="assets/hero-desktop.mp4" type="video/mp4">
+        <source data-desktop-src="assets/hero-desktop.mp4" data-mobile-src="assets/hero-mobile.mp4" type="video/mp4">
       </video>
       <div class="hero-overlay absolute inset-0"></div>
     </div>
@@ -1359,10 +1359,11 @@
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (prefersReducedMotion) return;
 
-      const shouldUseVideo = window.matchMedia("(min-width: 1200px)").matches;
-      if (!shouldUseVideo) return;
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
+      const isDesktop = window.matchMedia("(min-width: 1200px)").matches;
+      if (!isMobile && !isDesktop) return;
 
-      source.src = source.dataset.desktopSrc;
+      source.src = isMobile ? source.dataset.mobileSrc : source.dataset.desktopSrc;
       heroVideo.load();
       heroVideo.play().catch(() => {});
       heroVideo.addEventListener("canplay", () => heroVideo.classList.add("is-loaded"), { once: true });
