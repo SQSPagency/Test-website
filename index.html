@@ -5,11 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Squarespace Websites, Fixed Properly | SQSP Agency</title>
   <meta name="description" content="Squarespace website design, redesign, SEO setup and support for business owners who want a sharper, more polished site.">
+  <link rel="preload" as="image" href="assets/hero-mobile.avif" media="(max-width: 767px)" type="image/avif" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/hero-tablet.avif" media="(min-width: 768px) and (max-width: 1199px)" type="image/avif" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/hero-desktop.avif" media="(min-width: 1200px)" type="image/avif" fetchpriority="high">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@latest" defer></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', sans-serif; opacity: 0; transition: opacity 360ms ease; }
+    body { font-family: 'Inter', sans-serif; opacity: 1; transition: opacity 180ms ease; }
     body.page-ready { opacity: 1; }
     body.page-leaving { opacity: 0; }
     body.form-open { overflow: hidden; }
@@ -44,8 +49,31 @@
       transform: translateY(0) scale(1);
       pointer-events: auto;
     }
+    .hero-poster,
+    .hero-poster img,
     .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-poster {
+      z-index: 0;
+      display: block;
+      background: #5d554c;
+    }
+    .hero-poster img {
+      display: block;
+    }
+    .hero-video {
+      z-index: 1;
+      opacity: 0;
       filter: saturate(0.82) sepia(0.18) brightness(0.86) contrast(0.96);
+      transition: opacity 700ms ease;
+    }
+    .hero-video.is-loaded {
+      opacity: 1;
     }
     .hero-overlay {
       background:
@@ -180,9 +208,9 @@
       transform: scale(1);
     }
     .hero-stagger {
-      opacity: 0;
-      transform: translateY(16px);
-      animation: heroFadeUp 780ms ease forwards;
+      opacity: 1;
+      transform: none;
+      animation: none;
     }
     .hero-stagger:nth-child(2) { animation-delay: 120ms; }
     .hero-stagger:nth-child(3) { animation-delay: 240ms; }
@@ -789,8 +817,17 @@
 
   <header class="relative flex min-h-[760px] w-full items-center justify-center overflow-hidden px-4 pt-28 text-center">
     <div class="absolute inset-0 z-0">
-      <video class="hero-video h-full w-full object-cover" autoplay muted loop playsinline preload="metadata" aria-label="Clean Squarespace website shown on laptop and mobile">
-        <source src="assets/contact-hero.mp4?v=2" type="video/mp4">
+      <picture class="hero-poster">
+        <source srcset="assets/hero-mobile.avif" media="(max-width: 767px)" type="image/avif">
+        <source srcset="assets/hero-mobile.webp" media="(max-width: 767px)" type="image/webp">
+        <source srcset="assets/hero-tablet.avif" media="(min-width: 768px) and (max-width: 1199px)" type="image/avif">
+        <source srcset="assets/hero-tablet.webp" media="(min-width: 768px) and (max-width: 1199px)" type="image/webp">
+        <source srcset="assets/hero-desktop.avif" media="(min-width: 1200px)" type="image/avif">
+        <source srcset="assets/hero-desktop.webp" media="(min-width: 1200px)" type="image/webp">
+        <img src="assets/hero-desktop.webp" alt="Squarespace website design and support by SQSP Agency" width="1600" height="1067" loading="eager" fetchpriority="high" decoding="async">
+      </picture>
+      <video class="hero-video" autoplay muted loop playsinline preload="none" poster="assets/hero-desktop.webp" aria-label="Clean Squarespace website shown on laptop and mobile">
+        <source data-desktop-src="assets/hero-desktop.mp4" type="video/mp4">
       </video>
       <div class="hero-overlay absolute inset-0"></div>
     </div>
@@ -905,30 +942,30 @@
   <section id="sqsp-video-scroll-01" class="sqsp-video-scroll-gallery">
     <div class="sqsp-video-scroll-row sqsp-video-scroll-row-one">
       <div class="sqsp-video-scroll-track">
-        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_144509_89e2d612-8af2-45c3-90f4-4831bc60715d.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260508_214522_4a1fb4fe-00a2-4b9d-ae07-0adbaf6a6b4e.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
-        <div class="sqsp-video-scroll-card"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260503_133829_e6df9baf-d2a9-44b4-81f5-5aa46deea9e2.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
-        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_36WSAu4b97GmrlP9MuvI3CupyKY/hf_20260510_134818_da5b230e-b83a-4a46-a157-ce64da69a0c6.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_144509_89e2d612-8af2-45c3-90f4-4831bc60715d.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260508_214522_4a1fb4fe-00a2-4b9d-ae07-0adbaf6a6b4e.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
-        <div class="sqsp-video-scroll-card"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260503_133829_e6df9baf-d2a9-44b4-81f5-5aa46deea9e2.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
-        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_36WSAu4b97GmrlP9MuvI3CupyKY/hf_20260510_134818_da5b230e-b83a-4a46-a157-ce64da69a0c6.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video data-lazy-video muted loop playsinline preload="none"><source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_144509_89e2d612-8af2-45c3-90f4-4831bc60715d.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><img loading="lazy" decoding="async" width="320" height="410" src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260508_214522_4a1fb4fe-00a2-4b9d-ae07-0adbaf6a6b4e.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
+        <div class="sqsp-video-scroll-card"><img loading="lazy" decoding="async" width="320" height="410" src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260503_133829_e6df9baf-d2a9-44b4-81f5-5aa46deea9e2.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
+        <div class="sqsp-video-scroll-card"><video data-lazy-video muted loop playsinline preload="none"><source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video data-lazy-video muted loop playsinline preload="none"><source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_36WSAu4b97GmrlP9MuvI3CupyKY/hf_20260510_134818_da5b230e-b83a-4a46-a157-ce64da69a0c6.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video data-lazy-video muted loop playsinline preload="none"><source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_144509_89e2d612-8af2-45c3-90f4-4831bc60715d.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><img loading="lazy" decoding="async" width="320" height="410" src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260508_214522_4a1fb4fe-00a2-4b9d-ae07-0adbaf6a6b4e.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
+        <div class="sqsp-video-scroll-card"><img loading="lazy" decoding="async" width="320" height="410" src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260503_133829_e6df9baf-d2a9-44b4-81f5-5aa46deea9e2.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
+        <div class="sqsp-video-scroll-card"><video data-lazy-video muted loop playsinline preload="none"><source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video data-lazy-video muted loop playsinline preload="none"><source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_36WSAu4b97GmrlP9MuvI3CupyKY/hf_20260510_134818_da5b230e-b83a-4a46-a157-ce64da69a0c6.mp4" type="video/mp4"></video></div>
       </div>
     </div>
     <div class="sqsp-video-scroll-row sqsp-video-scroll-row-two">
       <div class="sqsp-video-scroll-track sqsp-video-scroll-track-reverse">
-        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260428_193507_4286c423-2fd9-4efd-92bd-91a939453fc1.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_101827_abebfeec-f243-466b-b494-7f6814c0fbbf.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260430_213411_cc4583b1-4d53-4645-b372-f7ff7e7febe9.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
-        <div class="sqsp-video-scroll-card"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260417_202752_65000520-5faa-424a-b852-ba4e6cf1c141.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
-        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260428_193507_4286c423-2fd9-4efd-92bd-91a939453fc1.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_101827_abebfeec-f243-466b-b494-7f6814c0fbbf.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card"><video autoplay muted loop playsinline preload="none"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
-        <div class="sqsp-video-scroll-card"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260430_213411_cc4583b1-4d53-4645-b372-f7ff7e7febe9.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
-        <div class="sqsp-video-scroll-card"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260417_202752_65000520-5faa-424a-b852-ba4e6cf1c141.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
+        <div class="sqsp-video-scroll-card"><video data-lazy-video muted loop playsinline preload="none"><source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260428_193507_4286c423-2fd9-4efd-92bd-91a939453fc1.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video data-lazy-video muted loop playsinline preload="none"><source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_101827_abebfeec-f243-466b-b494-7f6814c0fbbf.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video data-lazy-video muted loop playsinline preload="none"><source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><img loading="lazy" decoding="async" width="320" height="410" src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260430_213411_cc4583b1-4d53-4645-b372-f7ff7e7febe9.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
+        <div class="sqsp-video-scroll-card"><img loading="lazy" decoding="async" width="320" height="410" src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260417_202752_65000520-5faa-424a-b852-ba4e6cf1c141.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
+        <div class="sqsp-video-scroll-card"><video data-lazy-video muted loop playsinline preload="none"><source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260428_193507_4286c423-2fd9-4efd-92bd-91a939453fc1.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video data-lazy-video muted loop playsinline preload="none"><source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_101827_abebfeec-f243-466b-b494-7f6814c0fbbf.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><video data-lazy-video muted loop playsinline preload="none"><source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_182501_0216c2be-1b2f-40d3-8716-0d4f42e73b44.mp4" type="video/mp4"></video></div>
+        <div class="sqsp-video-scroll-card"><img loading="lazy" decoding="async" width="320" height="410" src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260430_213411_cc4583b1-4d53-4645-b372-f7ff7e7febe9.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
+        <div class="sqsp-video-scroll-card"><img loading="lazy" decoding="async" width="320" height="410" src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_36WSAu4b97GmrlP9MuvI3CupyKY%2Fhf_20260417_202752_65000520-5faa-424a-b852-ba4e6cf1c141.png&amp;w=1920&amp;q=85" alt="Squarespace website design example"></div>
       </div>
     </div>
   </section>
@@ -1308,7 +1345,38 @@
     </div>
   </div>
   <script>
-    lucide.createIcons();
+    function createLucideIcons() {
+      if (window.lucide) window.lucide.createIcons();
+    }
+    createLucideIcons();
+    window.addEventListener("load", createLucideIcons, { once: true });
+
+    function loadHeroVideo() {
+      const heroVideo = document.querySelector(".hero-video");
+      const source = heroVideo?.querySelector("source");
+      if (!heroVideo || !source || source.src) return;
+
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReducedMotion) return;
+
+      const shouldUseVideo = window.matchMedia("(min-width: 1200px)").matches;
+      if (!shouldUseVideo) return;
+
+      source.src = source.dataset.desktopSrc;
+      heroVideo.load();
+      heroVideo.play().catch(() => {});
+      heroVideo.addEventListener("canplay", () => heroVideo.classList.add("is-loaded"), { once: true });
+    }
+
+    function scheduleHeroVideo() {
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(loadHeroVideo, { timeout: 4500 });
+      } else {
+        window.setTimeout(loadHeroVideo, 3600);
+      }
+    }
+
+    window.addEventListener("load", scheduleHeroVideo, { once: true });
 
     const reviewRoot = document.querySelector("#website-review-form");
     const reviewForm = reviewRoot?.querySelector(".review-form");
@@ -1623,8 +1691,31 @@
       }, { threshold: 0.14, rootMargin: "0px 0px -48px 0px" });
 
       revealItems.forEach((item) => revealObserver.observe(item));
+
+      const lazyVideoObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const video = entry.target;
+          video.querySelectorAll("source[data-src]").forEach((source) => {
+            source.src = source.dataset.src;
+            source.removeAttribute("data-src");
+          });
+          video.load();
+          video.play().catch(() => {});
+          lazyVideoObserver.unobserve(video);
+        });
+      }, { rootMargin: "500px 0px" });
+
+      document.querySelectorAll("video[data-lazy-video]").forEach((video) => {
+        lazyVideoObserver.observe(video);
+      });
     } else {
       revealItems.forEach((item) => item.classList.add("is-visible"));
+      document.querySelectorAll("video[data-lazy-video] source[data-src]").forEach((source) => {
+        source.src = source.dataset.src;
+        source.removeAttribute("data-src");
+        source.closest("video")?.load();
+      });
     }
   </script>
 </body>
