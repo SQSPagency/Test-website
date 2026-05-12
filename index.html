@@ -547,9 +547,21 @@
     }
     #sqsp-video-scroll-01.sqsp-video-scroll-gallery {
       width: 100%;
-      overflow: hidden;
+      overflow-x: auto;
+      overflow-y: hidden;
       padding: clamp(28px, 5vw, 60px) 0;
       background: #ffffff;
+      cursor: grab;
+      user-select: none;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      touch-action: pan-x;
+    }
+    #sqsp-video-scroll-01.sqsp-video-scroll-gallery::-webkit-scrollbar {
+      display: none;
+    }
+    #sqsp-video-scroll-01.sqsp-video-scroll-gallery.is-dragging {
+      cursor: grabbing;
     }
     #sqsp-video-scroll-01 .sqsp-video-scroll-row {
       display: flex;
@@ -588,6 +600,7 @@
       overflow: hidden;
       background: #f3f3f3;
       box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+      pointer-events: none;
     }
     #sqsp-video-scroll-01 .sqsp-video-scroll-card video,
     #sqsp-video-scroll-01 .sqsp-video-scroll-card img {
@@ -767,8 +780,6 @@
     @media (max-width: 767px) {
       #sqsp-video-scroll-01.sqsp-video-scroll-gallery {
         padding: 28px 0;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
       }
       #sqsp-video-scroll-01 .sqsp-video-scroll-card {
         flex-basis: 176px;
@@ -1718,6 +1729,40 @@
         event.preventDefault();
       });
     });
+
+    const videoGallery = document.querySelector("#sqsp-video-scroll-01");
+    if (videoGallery) {
+      let isGalleryDragging = false;
+      let galleryStartX = 0;
+      let galleryStartScrollLeft = 0;
+
+      videoGallery.addEventListener("pointerdown", (event) => {
+        if (event.button !== 0 && event.pointerType === "mouse") return;
+        isGalleryDragging = true;
+        galleryStartX = event.clientX;
+        galleryStartScrollLeft = videoGallery.scrollLeft;
+        videoGallery.classList.add("is-dragging");
+        videoGallery.setPointerCapture?.(event.pointerId);
+      });
+
+      videoGallery.addEventListener("pointermove", (event) => {
+        if (!isGalleryDragging) return;
+        event.preventDefault();
+        const dragDistance = event.clientX - galleryStartX;
+        videoGallery.scrollLeft = galleryStartScrollLeft - dragDistance;
+      });
+
+      function stopGalleryDrag(event) {
+        if (!isGalleryDragging) return;
+        isGalleryDragging = false;
+        videoGallery.classList.remove("is-dragging");
+        if (event?.pointerId !== undefined) videoGallery.releasePointerCapture?.(event.pointerId);
+      }
+
+      videoGallery.addEventListener("pointerup", stopGalleryDrag);
+      videoGallery.addEventListener("pointercancel", stopGalleryDrag);
+      videoGallery.addEventListener("pointerleave", stopGalleryDrag);
+    }
 
     document.body.classList.add("page-ready");
 
